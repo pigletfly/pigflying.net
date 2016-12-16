@@ -1,0 +1,18 @@
+---
+layout: default
+title: Just flying
+---
+
+<ul class="entry-list">
+  {% for post in paginator.posts %}
+    <li class="entry-item">
+      <div class="entry-meta">
+        <span>{{ post.date | date: "%Y-%m-%d" }}</span>
+      </div>
+      <div class="detail">
+        <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+        <div class="description">{{ post.excerpt }}</div>
+      </div>
+    </li>
+  {% endfor %}
+</ul>

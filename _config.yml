@@ -1,0 +1,25 @@
+name: Just flying
+url: "http://www.pigflying.net"
+author: pigletfly
+
+gems: [jekyll-paginate]
+permalink: /:year/:month/:title/
+paginate: 5
+paginate_path: "page/:num/"
+
+google_analytics: UA-34929546-1
+google_webmaster: xuxKWekoKGP6azWZauNXZd_ubuylDqhbe11cvhK0a6g
+
+links:
+  - name: About
+    url: /about/
+  - name: Feed
+    url: /feed.xml
+
+social:
+  - name: Email
+    url: "mailto:wangbing.adam@gmail.com"
+  - name: Twitter
+    url: "https://twitter.com/pigletfly"
+  - name: GitHub
+    url: "https://github.com/pigletfly"

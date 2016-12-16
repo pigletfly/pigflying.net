@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>{{ page.title }} — {{ site.name }}</title>
+  {% include head.html %}
+</head>
+<body>
+  {% include navigation.html %}
+  <div id="main">
+    <div class="container yue">
+      {{ content }}
+    </div>
+    {% if paginator.total_pages > 1 %}
+      <div class="paginator" role="navigation">
+        {% if paginator.previous_page %}
+      	   <a class="previous" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">Previous</a>
+        {% else %}
+      	   <span class="previous">Previous</span>
+        {% endif %}
+        {% if paginator.next_page %}
+      	   <a class="next" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next</a>
+        {% else %}
+      	   <span class="next">Next</span>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+  {% include footer.html %}
+</body>
+</html>

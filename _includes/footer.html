@@ -1,0 +1,21 @@
+<script>
+  function js(u){
+    var d=document,a='script',s=document.createElement(a),f=d.getElementsByTagName(a)[0];s.src=u,s.async=true;f.parentNode.insertBefore(s,f);return s;
+  }
+  {% if site.google_analytics %}
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '{{ site.google_analytics }}']);
+  _gaq.push(['_setDomainName', 'pigflying.net']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_trackPageLoadTime']);
+  (function() {
+    if (location.port) return;
+    js('https://ssl.google-analytics.com/ga.js');
+  })();
+  {% endif %}
+</script>
+<div id="footer">
+  <div class="container">
+    <p>&copy; Copyright {{ site.time | date: "%Y" }} by {{ site.author }}. Designed by <a href="http://lepture.com/" target="_blank">lepture</a></p>
+  </div>
+</div>

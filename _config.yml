@@ -13,8 +13,8 @@ google_webmaster: xuxKWekoKGP6azWZauNXZd_ubuylDqhbe11cvhK0a6g
 links:
   - name: About
     url: /about/
-  - name: Archives
-    url: /archives/
+  - name: Archive
+    url: /archive/
 
 social:
   - name: Email

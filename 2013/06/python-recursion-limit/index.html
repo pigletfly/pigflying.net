@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>python中的默认递归深度 — Just flying</title>
+  
+<meta name="google-site-verification" content="xuxKWekoKGP6azWZauNXZd_ubuylDqhbe11cvhK0a6g" />
+
+<link rel="stylesheet" href="/css/yue.css">
+<link rel="stylesheet" href="/css/font.css">
+<link rel="stylesheet" href="/css/pygments.css">
+<link rel="stylesheet" href="/css/site.css">
+
+
+  
+</head>
+<body>
+  <div id="header">
+  <div class="container yue">
+    <div id="brand"><a href="/">大海里的木鱼</a></div>
+    <div id="nav" role="navigation">
+      
+        <a href="/about/">About</a>
+      
+        <a href="/archive/">Archive</a>
+      
+    </div>
+  </div>
+</div>
+
+  <div id="main">
+    <div class="container yue">
+      <div class="hentry" itemscope itemtype="http://schema.org/Article">
+        <h1 class="entry-title" itemprop="name">python中的默认递归深度</h1>
+        
+        <div class="entry-meta">
+          <time class="updated" datetime="2013-06-16T09:34:00+08:00" itemprop="datePublished" pubdate>
+            2013-06-16
+          </time>
+          <span class="author vcard">
+            <a class="fn" itemprop="author" href="/">pigletfly</a>
+          </span>
+        </div>
+        
+        <div class="entry-content" itemprop="articleBody">
+          <p>使用python中出现了一个很奇怪的异常，<code class="highlighter-rouge">RuntimeError: maximum recursion depth exceeded in cmp</code>，原来是递归引起的。看一个简单的例子，factorial数列。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>
+<span class="c">#!/usr/bin/python#</span>
+<span class="o">-*-</span> <span class="n">coding</span><span class="p">:</span> <span class="n">utf</span><span class="o">-</span><span class="mi">8</span> <span class="o">-*-</span>
+
+<span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>    
+  <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>        
+    <span class="k">return</span> <span class="mi">1</span>    
+  <span class="k">else</span><span class="p">:</span>        
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">''</span><span class="n">__main__</span><span class="s">''</span><span class="p">:</span>    
+  <span class="n">factorial</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+</code></pre>
+</div>
+
+<p>这个例子就会引起这个RuntimeError,原因是python中默认的递归深度的限制，默认的是1000， 我使用的是python2.7.3。
+使用sys可以查看和修改当前环境下默认递归深度，参见 <a href="http://docs.python.org/2/library/sys.html#sys.getrecursionlimitimport" target="_blank">recursionlimit</a></p>
+
+        </div>
+      </div>
+      
+        <div class="entry-tags">
+          
+            <a class="tag" href="/archive/#python">python</a>
+          
+        </div>
+      
+      
+
+
+
+    </div>
+  </div>
+  <script>
+  function js(u){
+    var d=document,a='script',s=document.createElement(a),f=d.getElementsByTagName(a)[0];s.src=u,s.async=true;f.parentNode.insertBefore(s,f);return s;
+  }
+  
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34929546-1']);
+  _gaq.push(['_setDomainName', 'pigflying.net']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_trackPageLoadTime']);
+  (function() {
+    if (location.port) return;
+    js('https://ssl.google-analytics.com/ga.js');
+  })();
+  
+</script>
+<div id="footer">
+  <div class="container">
+    <p>&copy; Copyright 2018 by pigletfly. Designed by <a href="http://lepture.com/" target="_blank">lepture</a></p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title><![CDATA[Just flying]]></title>
+    <link href="http://www.pigflying.net/feed.xml" rel="self" />
+    <link href="http://www.pigflying.net/" />
+    <updated>2018-07-04T09:19:05+08:00</updated>
+    <id>http://www.pigflying.net/</id>
+    
+    <entry>
+        <title type="html"><![CDATA[kubernetes 1.5.1 搭建过程]]></title>
+        <link href="http://www.pigflying.net/2016/12/k8s-setup/"/>
+        <author>
+            <name>pigletfly</name>
+        </author>
+        <updated>2016-12-20T09:34:00+08:00</updated>
+        <published>2016-12-20T09:34:00+08:00</published>
+        <id>http://www.pigflying.net/2016/12/k8s-setup/</id>
+        <content type="html" xml:base="http://www.pigflying.net/" xml:lang="en">
+            <![CDATA[ <p>最近折腾了下 kubernetes 1.5.1,记录下安装过程。</p>
+
+<ul>
+  <li>安装相关依赖(master node 都需要操作)</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>sudo tee /etc/yum.repos.d/docker.repo <span class="sh">&lt;&lt;-'EOF'
+[dockerrepo]
+name=Docker Repository
+baseurl=https://yum.dockerproject.org/repo/experimental/centos/7/
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
+EOF
+
+</span>yum install -y golang
+yum install docker-engine -y
+yum -y install ntp
+yum install net-tools  bridge-utils <span class="nb">bind</span>-utils -y
+yum install socat -y
+yum install -y ebtables
+
+systemctl <span class="nb">enable </span>ntpd
+systemctl start ntpd
+systemctl <span class="nb">enable </span>docker
+systemctl start docker
+systemctl status docker
+
+setenforce 0
+systemctl disable iptables-services firewalld
+systemctl stop iptables-services firewalld
+
+
+</code></pre>
+</div>
+
+<ul>
+  <li>编译安装 rpm 包(master node 都需要操作)</li>
+</ul>
+
+<p>源代码 <a href="https://github.com/kubernetes/release">release</a>，进入 <code class="highlighter-rouge">/data/release/rpm</code>,修改 <code class="highlighter-rouge">kubelet.spec</code> 里的 <code class="highlighter-rouge">%global KUBE_VERSION 1.4.6</code>，修改为对应的版本，运行 <code class="highlighter-rouge">./docker-build.sh</code>，执行成功后 rpm 包在 output 目录下。
+运行 <code class="highlighter-rouge">rpm -ivh *.rpm</code> 安装所有编译成功的 rpm 包。可以在一台机器上编译成功后拷贝到其他机器。</p>
+
+<ul>
+  <li>准备镜像</li>
+</ul>
+
+<p>由于墙的原因，从 Google 拉不了相关镜像，可以使用国内的灵雀云国际节点转一下，然后打 tag 。官方镜像地址，<a href="https://console.cloud.google.com/kubernetes/images/list?location=GLOBAL&amp;project=google-containers">google-containers</a>。如果不确定版本，在初始化 <code class="highlighter-rouge">master</code> 节点时，去查看 <code class="highlighter-rouge">/etc/kubernetes/manifests</code> 目录下相关文件。如果有私有仓库，可以打完标签后存储到私有仓库里。</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nv">images</span><span class="o">=(</span>dnsmasq-metrics-amd64:1.0 kubedns-amd64:1.9 kube-scheduler-amd64:v1.5.1 kube-controller-manager-amd64:v1.5.1 kube-apiserver-amd64:v1.5.1 etcd-amd64:3.0.14-kubeadm kube-dnsmasq-amd64:1.4 exechealthz-amd64:1.2 pause-amd64:3.0 kubernetes-dashboard-amd64:v1.5.0 kube-discovery-amd64:1.0 kube-proxy-amd64:v1.5.1<span class="o">)</span>
+<span class="k">for </span>imageName <span class="k">in</span> <span class="k">${</span><span class="nv">images</span><span class="p">[@]</span><span class="k">}</span> ; <span class="k">do
+  </span>docker pull registry.alauda.cn/pigletfly/<span class="nv">$imageName</span>
+  docker tag registry.alauda.cn/pigletfly/<span class="nv">$imageName</span> gcr.io/google_containers/<span class="nv">$imageName</span>
+  docker rmi registry.alauda.cn/pigletfly/<span class="nv">$imageName</span>
+<span class="k">done</span>
+
+</code></pre>
+</div>
+
+<ul>
+  <li>初始化 master</li>
+</ul>
+
+<p>首先进行重置，防止有环境残留。</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>
+systemctl stop kubelet;
+<span class="c"># 注意: 下面这条命令会干掉所有正在运行的 docker 容器，# 如果要进行重置操作，最好先确定当前运行的所有容器都能干掉(干掉不影响业务)，# 否则的话最好手动删除 kubeadm 创建的相关容器(gcr.io 相关的)</span>
+docker rm -f -v <span class="k">$(</span>docker ps -q<span class="k">)</span>;
+find /var/lib/kubelet | xargs -n 1 findmnt -n -t tmpfs -o TARGET -T | uniq | xargs -r umount -v;
+rm -rf /etc/kubernetes /var/lib/kubelet /var/lib/etcd;
+
+</code></pre>
+</div>
+
+<p>然后启动 kubelet</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>systemctl <span class="nb">enable </span>kubelet
+systemctl start kubelet
+</code></pre>
+</div>
+
+<p>最后开始初始化</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kubeadm init --api-advertise-addresses 172.30.215.19 --use-kubernetes-version v1.5.1 --pod-network-cidr=172.31.0.0/16
+</code></pre>
+</div>
+
+<p>初始化成功后会打印 token</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>kubeadm join --token=6e57ff.1e0ee161fa4a3c4a 172.30.198.62
+</code></pre>
+</div>
+
+<p>在 node 节点上运行上面的即可</p>
+
+<ul>
+  <li>验证</li>
+</ul>
+
+<p>加入节点后，可以验证下相关信息。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>netstat -atnp  |grep 443
+kubectl get cs
+kubectl cluster-info
+kubectl get pod --namespace=kube-system
+kubectl get po --namespace=kube-system -o wide
+kubectl describe svc kubernetes-dashboard --namespace=kube-system
+kubectl get svc --namespace=kube-system
+</code></pre>
+</div>
+ ]]>
+        </content>
+    </entry>
+    
+    <entry>
+        <title type="html"><![CDATA[python中的默认递归深度]]></title>
+        <link href="http://www.pigflying.net/2013/06/python-recursion-limit/"/>
+        <author>
+            <name>pigletfly</name>
+        </author>
+        <updated>2013-06-16T09:34:00+08:00</updated>
+        <published>2013-06-16T09:34:00+08:00</published>
+        <id>http://www.pigflying.net/2013/06/python-recursion-limit/</id>
+        <content type="html" xml:base="http://www.pigflying.net/" xml:lang="en">
+            <![CDATA[ <p>使用python中出现了一个很奇怪的异常，<code class="highlighter-rouge">RuntimeError: maximum recursion depth exceeded in cmp</code>，原来是递归引起的。看一个简单的例子，factorial数列。</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>
+<span class="c">#!/usr/bin/python#</span>
+<span class="o">-*-</span> <span class="n">coding</span><span class="p">:</span> <span class="n">utf</span><span class="o">-</span><span class="mi">8</span> <span class="o">-*-</span>
+
+<span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>    
+  <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>        
+    <span class="k">return</span> <span class="mi">1</span>    
+  <span class="k">else</span><span class="p">:</span>        
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">''</span><span class="n">__main__</span><span class="s">''</span><span class="p">:</span>    
+  <span class="n">factorial</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+</code></pre>
+</div>
+
+<p>这个例子就会引起这个RuntimeError,原因是python中默认的递归深度的限制，默认的是1000， 我使用的是python2.7.3。
+使用sys可以查看和修改当前环境下默认递归深度，参见 <a href="http://docs.python.org/2/library/sys.html#sys.getrecursionlimitimport" target="_blank">recursionlimit</a></p>
+ ]]>
+        </content>
+    </entry>
+    
+    <entry>
+        <title type="html"><![CDATA[Chrome Developer Tools代码高亮]]></title>
+        <link href="http://www.pigflying.net/2013/01/chrome-developer-tools%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/"/>
+        <author>
+            <name>pigletfly</name>
+        </author>
+        <updated>2013-01-16T18:43:00+08:00</updated>
+        <published>2013-01-16T18:43:00+08:00</published>
+        <id>http://www.pigflying.net/2013/01/chrome-developer-tools%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/</id>
+        <content type="html" xml:base="http://www.pigflying.net/" xml:lang="en">
+            <![CDATA[ <p>Chrome Developer Tools 也可以代码高亮了，安装步骤如下:</p>
+
+<ol>
+  <li>找到 Chrome 的Custom.css位置:
+    <ul>
+      <li>Mac: ~/Library/Application Support/Google/Chrome/Default/User StyleSheets/</li>
+      <li>Windows: C:\Users**YourUsername**\AppData\Local\Google\Chrome\UserData\Default\User StyleSheets</li>
+      <li>Ubuntu (Chromium): ~/.config/chromium/Default/User StyleSheets/</li>
+    </ul>
+  </li>
+  <li>下载Custom.css,替换掉已有的Custom.css文件3. 无须重启浏览器，马上生效</li>
+</ol>
+ ]]>
+        </content>
+    </entry>
+    
+    <entry>
+        <title type="html"><![CDATA[ThinkPad E40 安装 win7 x64 旗舰版死机]]></title>
+        <link href="http://www.pigflying.net/2012/12/thinkpad-e40-%E5%AE%89%E8%A3%85-win7-x64-%E6%97%97%E8%88%B0%E7%89%88%E6%AD%BB%E6%9C%BA/"/>
+        <author>
+            <name>pigletfly</name>
+        </author>
+        <updated>2012-12-17T23:07:00+08:00</updated>
+        <published>2012-12-17T23:07:00+08:00</published>
+        <id>http://www.pigflying.net/2012/12/thinkpad-e40-%E5%AE%89%E8%A3%85-win7-x64-%E6%97%97%E8%88%B0%E7%89%88%E6%AD%BB%E6%9C%BA/</id>
+        <content type="html" xml:base="http://www.pigflying.net/" xml:lang="en">
+            <![CDATA[ <p>最近升级了 ThinkPad E40 的内存，原装有 2G，加了一根 4G 的内存，刚开始系统是 Windows8,基本没有什么问题，后来还是不太习惯Win8，改回 Windows7。</p>
+
+<p>用了一段时间后，发现总会频繁的死机，屏幕卡死，伴随鸣叫声。刚开始以为是内存不兼容，最后才发现是硬盘设置的问题，解决方法如下</p>
+
+<ol>
+  <li>先改注册表：<code class="highlighter-rouge">HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Msahci</code> 里面的 <code class="highlighter-rouge">Start</code>改为<code class="highlighter-rouge">02</code>.</li>
+  <li>然后重启进BIOS里面将硬盘模式由<code class="highlighter-rouge">Compatibility</code>改为<code class="highlighter-rouge">AHCI3</code></li>
+  <li>进入win7时会自动安装驱动</li>
+  <li>如果官方有提供ahci的驱动，下载官方的驱动，然后安装，</li>
+  <li>安装成功后重启电脑</li>
+</ol>
+ ]]>
+        </content>
+    </entry>
+    
+    <entry>
+        <title type="html"><![CDATA[Blogger开始支持https]]></title>
+        <link href="http://www.pigflying.net/2012/10/blogger%E5%BC%80%E5%A7%8B%E6%94%AF%E6%8C%81https/"/>
+        <author>
+            <name>pigletfly</name>
+        </author>
+        <updated>2012-10-16T10:20:00+08:00</updated>
+        <published>2012-10-16T10:20:00+08:00</published>
+        <id>http://www.pigflying.net/2012/10/blogger%E5%BC%80%E5%A7%8B%E6%94%AF%E6%8C%81https/</id>
+        <content type="html" xml:base="http://www.pigflying.net/" xml:lang="en">
+            <![CDATA[ <p>今天开始Blogger开始支持https,虽然还不能支持打开blogspot.com,但已经是很大的进步了,以前发布post只能翻墙,很不方便,现在终于可以了,Google的所有服务都加密最好了,未来的话期待ipv6了.</p>
+ ]]>
+        </content>
+    </entry>
+    
+    <entry>
+        <title type="html"><![CDATA[第一个父亲节]]></title>
+        <link href="http://www.pigflying.net/2012/06/%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%88%B6%E4%BA%B2%E8%8A%82/"/>
+        <author>
+            <name>pigletfly</name>
+        </author>
+        <updated>2012-06-17T09:00:00+08:00</updated>
+        <published>2012-06-17T09:00:00+08:00</published>
+        <id>http://www.pigflying.net/2012/06/%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%88%B6%E4%BA%B2%E8%8A%82/</id>
+        <content type="html" xml:base="http://www.pigflying.net/" xml:lang="en">
+            <![CDATA[ <p>今天是人生中的第一个父亲节，女儿还有一周也就要满月了，嗷嗷待哺。感谢我的妻子，付出了很多很多，不是言语所能表达的。不少人问当爸爸了什么感觉，自己觉得心里又多了一份牵挂，每天忙忙碌碌之中心里总是满满的。生命本身就是一个奇迹，但这个小生命诞生之后，心底一直暗暗发力一定为了这个家加把劲儿，早点安稳下来，把最特别的爱给最特别的你们。孩子，爸爸妈妈爱你，希望你能健健康康的成长。刚刚你妈妈给我发个微信说，在给你洗澡的时候你竟然拉了，哈哈。从你出生到现在，在你身边就待了四天，没能在你身边看你一天天的长大，你就整天地磨你妈妈。爸爸对孩子的成长是很大的，我永远是你身后的那座大山。</p>
+ ]]>
+        </content>
+    </entry>
+    
+    <entry>
+        <title type="html"><![CDATA[无法抗拒]]></title>
+        <link href="http://www.pigflying.net/2012/03/%E6%97%A0%E6%B3%95%E6%8A%97%E6%8B%92/"/>
+        <author>
+            <name>pigletfly</name>
+        </author>
+        <updated>2012-03-14T00:13:00+08:00</updated>
+        <published>2012-03-14T00:13:00+08:00</published>
+        <id>http://www.pigflying.net/2012/03/%E6%97%A0%E6%B3%95%E6%8A%97%E6%8B%92/</id>
+        <content type="html" xml:base="http://www.pigflying.net/" xml:lang="en">
+            <![CDATA[ <p>无论是悲剧还是喜剧</p>
+
+<p>从一开始就无法抗拒</p>
+
+<p>这就是所谓的命中注定</p>
+
+<p>生命的每一个圈圈</p>
+
+<p>一开始也画得很清晰</p>
+
+<p>有时我们会迷茫踟蹰</p>
+
+<p>就在转了许多个圈圈之后</p>
+
+<p>突然醍醐灌顶</p>
+
+<p>这就是我所要的幸福</p>
+
+<p>于是开始学会</p>
+
+<p>且行且珍惜</p>
+
+<p>因为永远无法预知</p>
+
+<p>等着自己的未来是什么</p>
+
+<p>只有当到达时</p>
+
+<p>才会发现一切无法抗拒</p>
+ ]]>
+        </content>
+    </entry>
+    
+    <entry>
+        <title type="html"><![CDATA[我们结婚了]]></title>
+        <link href="http://www.pigflying.net/2012/01/%E6%88%91%E4%BB%AC%E7%BB%93%E5%A9%9A%E4%BA%86/"/>
+        <author>
+            <name>pigletfly</name>
+        </author>
+        <updated>2012-01-13T09:00:00+08:00</updated>
+        <published>2012-01-13T09:00:00+08:00</published>
+        <id>http://www.pigflying.net/2012/01/%E6%88%91%E4%BB%AC%E7%BB%93%E5%A9%9A%E4%BA%86/</id>
+        <content type="html" xml:base="http://www.pigflying.net/" xml:lang="en">
+            <![CDATA[ <p>关于爱你这件事情，喝醉了后我依然很清醒，因为很确定</p>
+
+<p>爱本来就是一件千回百转的事情，不曾被离弃，不曾被伤害，也不会太深刻，它原来是一种经历</p>
+
+<p>那是一种很奇妙的感觉，抑或一刹那的邂逅，抑或一辈子的厮守。到现在为止，如果你问我爱情到底是什么，我会坚决地告诉你：那是一种能感觉到的责任，而且只能在自己的心底</p>
+
+<p>很小的时候，我幼稚的认为娶个媳妇，只要自己真心的对她好，也暗暗告诫自己长大娶媳妇了一定要对她好，那就是爱情</p>
+
+<p>如果那就是爱情，世界会更简单，不会有许多不必要的纷争了。慢慢地长大，自己也愈发得倔，爱是一种单方面的固执逐渐在心里潜移默化</p>
+
+<p>但是，爱情真正是什么，那种滋味是什么也随着年轮而懵懂起来。学生时代追求的那种朦朦胧胧感觉，有点暧昧，或者叫亲近，大都以为是爱情，就好像九把刀追沈佳宜那样，或许并不是喜欢，只是喜欢那种过程的感觉。爱情的确是种感觉，永不结婚的人们，仿佛永远甜蜜，而结了婚，许多年后，也许爱情的滋味全都融化成了亲情更让人温暖。更多的滋味，只有自己在不断的追寻中体味到了</p>
+
+<p>和很多人一样，经历了很多事情以后，我们终于结婚了</p>
+
+<p>今天你终于成为我的新娘，叫老婆叫了这么多年，终于成为名副其实的老婆了</p>
+
+<p>无论生老病死，无论贫富贵贱，希望我们能永远在一起</p>
+ ]]>
+        </content>
+    </entry>
+    
+    <entry>
+        <title type="html"><![CDATA[漫步人生路]]></title>
+        <link href="http://www.pigflying.net/2011/11/%E6%BC%AB%E6%AD%A5%E4%BA%BA%E7%94%9F%E8%B7%AF/"/>
+        <author>
+            <name>pigletfly</name>
+        </author>
+        <updated>2011-11-27T20:48:00+08:00</updated>
+        <published>2011-11-27T20:48:00+08:00</published>
+        <id>http://www.pigflying.net/2011/11/%E6%BC%AB%E6%AD%A5%E4%BA%BA%E7%94%9F%E8%B7%AF/</id>
+        <content type="html" xml:base="http://www.pigflying.net/" xml:lang="en">
+            <![CDATA[ <p>很多事来不及思考</p>
+
+<p>就这样自然发生了</p>
+
+<p>在丰富多彩的路上</p>
+
+<p>注定经历风雨</p>
+
+<p>让它自然而地来吧</p>
+
+<p>让它悄然地去吧</p>
+
+<p>就这样微笑地看着自己</p>
+
+<p>漫步在这人生里</p>
+
+<p>当往事悄然而走远</p>
+
+<p>只留下清澈的心</p>
+
+<p>让我们相互温暖</p>
+
+<p>漫步在这阳光里</p>
+
+<p>一个人，暖暖的初冬的一整天。在Twitter、饭否和G+上待了一整天，也看了很多关于移民的帖子。在Google街景里在墨尔本的大街上逛了几圈，澳洲的天空真蓝，环境真不错。昨晚蜡笔也说到，中国人活着真累，一个劲儿地就是工作赚钱，就连埃塞当地人都觉得在那儿的中国人有点不可思议，就是工作，去那里旅游的人也大都是欧美的，鲜见有中国人过去游玩。突然真的感觉，中国人真的挺累的，一套房子把两个人甚至一家人的一生都绑住了。当然富人也太多，只不过贫富差距太大，而我们都只是普通的一个穷人。看完澳洲技术移民的帖子后，更觉得海外再造中华里说的一些观点还是有一定道理的，比如输出中国庞大的农民工到全球，其实在外国技术工人也是比较缺的。所以，有机会大家赶快移民吧，享受美好的空气和生活吧～～～</p>
+ ]]>
+        </content>
+    </entry>
+    
+    <entry>
+        <title type="html"><![CDATA[又是冬来临]]></title>
+        <link href="http://www.pigflying.net/2011/11/%E5%8F%88%E6%98%AF%E5%86%AC%E6%9D%A5%E4%B8%B4/"/>
+        <author>
+            <name>pigletfly</name>
+        </author>
+        <updated>2011-11-07T20:21:00+08:00</updated>
+        <published>2011-11-07T20:21:00+08:00</published>
+        <id>http://www.pigflying.net/2011/11/%E5%8F%88%E6%98%AF%E5%86%AC%E6%9D%A5%E4%B8%B4/</id>
+        <content type="html" xml:base="http://www.pigflying.net/" xml:lang="en">
+            <![CDATA[ <p>几场细细的秋雨后，初冬已悄然来临。那天早晨，我走出房门时，黄得残然的叶子扑簌簌落了一地，心底打了个哆嗦，其实我更喜欢夏天。总以为夏天是欢欣的，而冬天总是悲凉的，但却又能启发人，就好象孤独的人不一定可悲一样。总以为人生是漫长的，而自己永远仿佛很年轻，其实不经意间自己和周围的人已经很大了。大学时间我一直嚎叫着“生命在于经历”，回首处，经历已经不仅仅在于经历本身了。小白沿着夏的尾巴，一路一个人从海口骑行到了北京，将近四千华里夏日里的风餐露宿把他摧残得和小鸡子似的，那爪子又黑又硬。我总是让他放慢脚步，停下来看一看周围的景色，可他还是每天能骑上将近一百公里。即便这样，我想这些经历已经足以影响他的人生了。</p>
+
+<p>下班的路上，公交车地铁站，到处是匆忙的人流，更习惯把耳机戴上听着有味或无味的频率，脑子里晃荡着不远的未来。不远的未来？对，不再是一个人或者两个人，更不会也不该再感到无助了，我得撑起一个家的天空了，继续踏实地履行对你的诺言让你成为一个幸福的小女人。童年的天真无忌，少年的懵懂疯狂，都早已随时光远去，留下最真挚的对幸福生活的孜孜不倦，或许有坎坷，或许有怨言，都不会阻挡前进的脚步。</p>
+ ]]>
+        </content>
+    </entry>
+    
+</feed>

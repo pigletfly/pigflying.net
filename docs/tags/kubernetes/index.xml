@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>kubernetes on 大海里的木鱼</title>
+    <link>https://pigflying.net/tags/kubernetes/</link>
+    <description>Recent content in kubernetes on 大海里的木鱼</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 20 Dec 2016 09:34:00 +0800</lastBuildDate><atom:link href="https://pigflying.net/tags/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>kubernetes 1.5.1 搭建过程</title>
+      <link>https://pigflying.net/post/2016-12-20-k8s-setup/</link>
+      <pubDate>Tue, 20 Dec 2016 09:34:00 +0800</pubDate>
+      
+      <guid>https://pigflying.net/post/2016-12-20-k8s-setup/</guid>
+      <description>最近折腾了下 kubernetes 1.5.1,记录下安装过程。 安装相关依赖(master node 都需要操作) sudo tee /etc/yum.repos.d/docker.repo &amp;lt;&amp;lt;-&#39;EOF&#39; [dockerrepo] name=Docker Repository baseurl=https://yum.dockerproject.org/repo/experimental/centos/7/ enabled=1 gpgcheck=1 gpgkey=https://yum.dockerproject.org/gpg EOF yum install -y golang yum install docker-engine -y yum -y install ntp yum install net-tools bridge-utils bind-utils -y yum install socat -y yum install -y ebtables systemctl enable ntpd systemctl start ntpd systemctl enable docker systemctl start docker systemctl status docker setenforce 0 systemctl disable iptables-services firewalld</description>
+    </item>
+    
+  </channel>
+</rss>

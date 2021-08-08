@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>python on 大海里的木鱼</title>
-    <link>https://pigflying.net/tags/python/</link>
+    <link>https://www.pigflying.net/tags/python/</link>
     <description>Recent content in python on 大海里的木鱼</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 16 Jun 2013 09:34:00 +0800</lastBuildDate><atom:link href="https://pigflying.net/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 16 Jun 2013 09:34:00 +0800</lastBuildDate><atom:link href="https://www.pigflying.net/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>python中的默认递归深度</title>
-      <link>https://pigflying.net/post/2013-06-16-python-recursion-limit/</link>
+      <link>https://www.pigflying.net/post/2013-06-16-python-recursion-limit/</link>
       <pubDate>Sun, 16 Jun 2013 09:34:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2013-06-16-python-recursion-limit/</guid>
+      <guid>https://www.pigflying.net/post/2013-06-16-python-recursion-limit/</guid>
       <description>使用python中出现了一个很奇怪的异常，RuntimeError: maximum recursion depth exceeded in cmp，原来是递归引起的。看一个简单的例子，factorial数列。 #!/usr/bin/python# -*- coding: utf-8 -*- def factorial(n): if n == 0 or n == 1: return 1 else: return n * factorial(n - 1) if __name__ ==</description>
     </item>
     

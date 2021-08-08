@@ -2,593 +2,593 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>大海里的木鱼</title>
-    <link>https://pigflying.net/</link>
+    <link>https://www.pigflying.net/</link>
     <description>Recent content on 大海里的木鱼</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 20 Dec 2016 09:34:00 +0800</lastBuildDate><atom:link href="https://pigflying.net/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 Dec 2016 09:34:00 +0800</lastBuildDate><atom:link href="https://www.pigflying.net/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>kubernetes 1.5.1 搭建过程</title>
-      <link>https://pigflying.net/post/2016-12-20-k8s-setup/</link>
+      <link>https://www.pigflying.net/post/2016-12-20-k8s-setup/</link>
       <pubDate>Tue, 20 Dec 2016 09:34:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2016-12-20-k8s-setup/</guid>
+      <guid>https://www.pigflying.net/post/2016-12-20-k8s-setup/</guid>
       <description>最近折腾了下 kubernetes 1.5.1,记录下安装过程。 安装相关依赖(master node 都需要操作) sudo tee /etc/yum.repos.d/docker.repo &amp;lt;&amp;lt;-&#39;EOF&#39; [dockerrepo] name=Docker Repository baseurl=https://yum.dockerproject.org/repo/experimental/centos/7/ enabled=1 gpgcheck=1 gpgkey=https://yum.dockerproject.org/gpg EOF yum install -y golang yum install docker-engine -y yum -y install ntp yum install net-tools bridge-utils bind-utils -y yum install socat -y yum install -y ebtables systemctl enable ntpd systemctl start ntpd systemctl enable docker systemctl start docker systemctl status docker setenforce 0 systemctl disable iptables-services firewalld</description>
     </item>
     
     <item>
       <title>python中的默认递归深度</title>
-      <link>https://pigflying.net/post/2013-06-16-python-recursion-limit/</link>
+      <link>https://www.pigflying.net/post/2013-06-16-python-recursion-limit/</link>
       <pubDate>Sun, 16 Jun 2013 09:34:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2013-06-16-python-recursion-limit/</guid>
+      <guid>https://www.pigflying.net/post/2013-06-16-python-recursion-limit/</guid>
       <description>使用python中出现了一个很奇怪的异常，RuntimeError: maximum recursion depth exceeded in cmp，原来是递归引起的。看一个简单的例子，factorial数列。 #!/usr/bin/python# -*- coding: utf-8 -*- def factorial(n): if n == 0 or n == 1: return 1 else: return n * factorial(n - 1) if __name__ ==</description>
     </item>
     
     <item>
       <title>Chrome Developer Tools代码高亮</title>
-      <link>https://pigflying.net/post/2013-01-16-chrome-developer-tools%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/</link>
+      <link>https://www.pigflying.net/post/2013-01-16-chrome-developer-tools%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/</link>
       <pubDate>Wed, 16 Jan 2013 18:43:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2013-01-16-chrome-developer-tools%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/</guid>
+      <guid>https://www.pigflying.net/post/2013-01-16-chrome-developer-tools%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/</guid>
       <description>Chrome Developer Tools 也可以代码高亮了，安装步骤如下: 找到 Chrome 的Custom.css位置: Mac: ~/Library/Application Support/Google/Chrome/Default/User StyleSheets/ Windows: C:\Users*YourUsername*\AppData\Local\Google\Chrome\UserData\Default\User StyleSheets Ubuntu (Chromium): ~/.config/chromium/Default/User StyleSheets/ 下载Custom.css,替换掉已有的Custom.css文件3. 无须重启浏览器，马上生效</description>
     </item>
     
     <item>
       <title>ThinkPad E40 安装 win7 x64 旗舰版死机</title>
-      <link>https://pigflying.net/post/2012-12-17-thinkpad-e40-%E5%AE%89%E8%A3%85-win7-x64-%E6%97%97%E8%88%B0%E7%89%88%E6%AD%BB%E6%9C%BA/</link>
+      <link>https://www.pigflying.net/post/2012-12-17-thinkpad-e40-%E5%AE%89%E8%A3%85-win7-x64-%E6%97%97%E8%88%B0%E7%89%88%E6%AD%BB%E6%9C%BA/</link>
       <pubDate>Mon, 17 Dec 2012 23:07:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2012-12-17-thinkpad-e40-%E5%AE%89%E8%A3%85-win7-x64-%E6%97%97%E8%88%B0%E7%89%88%E6%AD%BB%E6%9C%BA/</guid>
+      <guid>https://www.pigflying.net/post/2012-12-17-thinkpad-e40-%E5%AE%89%E8%A3%85-win7-x64-%E6%97%97%E8%88%B0%E7%89%88%E6%AD%BB%E6%9C%BA/</guid>
       <description>最近升级了 ThinkPad E40 的内存，原装有 2G，加了一根 4G 的内存，刚开始系统是 Windows8,基本没有什么问题，后来还是不太习惯Win8，改回 Windows7。 用了一段时间后，发现总会频繁的死机，屏幕卡死，伴随鸣</description>
     </item>
     
     <item>
       <title>Blogger开始支持https</title>
-      <link>https://pigflying.net/post/2012-10-16-blogger%E5%BC%80%E5%A7%8B%E6%94%AF%E6%8C%81https/</link>
+      <link>https://www.pigflying.net/post/2012-10-16-blogger%E5%BC%80%E5%A7%8B%E6%94%AF%E6%8C%81https/</link>
       <pubDate>Tue, 16 Oct 2012 10:20:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2012-10-16-blogger%E5%BC%80%E5%A7%8B%E6%94%AF%E6%8C%81https/</guid>
+      <guid>https://www.pigflying.net/post/2012-10-16-blogger%E5%BC%80%E5%A7%8B%E6%94%AF%E6%8C%81https/</guid>
       <description>今天开始Blogger开始支持https,虽然还不能支持打开blogspot.com,但已经是很大的进步了,以前发布post只能翻墙,很不方便,现在终于可以了,Google的所有服务都加密最好了,未来</description>
     </item>
     
     <item>
       <title>第一个父亲节</title>
-      <link>https://pigflying.net/post/2012-06-17-%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%88%B6%E4%BA%B2%E8%8A%82/</link>
+      <link>https://www.pigflying.net/post/2012-06-17-%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%88%B6%E4%BA%B2%E8%8A%82/</link>
       <pubDate>Sun, 17 Jun 2012 09:00:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2012-06-17-%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%88%B6%E4%BA%B2%E8%8A%82/</guid>
+      <guid>https://www.pigflying.net/post/2012-06-17-%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%88%B6%E4%BA%B2%E8%8A%82/</guid>
       <description>今天是人生中的第一个父亲节，女儿还有一周也就要满月了，嗷嗷待哺。感谢我的妻子，付出了很多很多，不是言语所能表达的。不少人问当爸爸了什么感觉，自己觉得心里又多了一份牵挂，每天忙忙碌碌之中心里总是满满的。</description>
     </item>
     
     <item>
       <title>无法抗拒</title>
-      <link>https://pigflying.net/post/2012-03-14-%E6%97%A0%E6%B3%95%E6%8A%97%E6%8B%92/</link>
+      <link>https://www.pigflying.net/post/2012-03-14-%E6%97%A0%E6%B3%95%E6%8A%97%E6%8B%92/</link>
       <pubDate>Wed, 14 Mar 2012 00:13:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2012-03-14-%E6%97%A0%E6%B3%95%E6%8A%97%E6%8B%92/</guid>
+      <guid>https://www.pigflying.net/post/2012-03-14-%E6%97%A0%E6%B3%95%E6%8A%97%E6%8B%92/</guid>
       <description>无论是悲剧还是喜剧 从一开始就无法抗拒 这就是所谓的命中注定 生命的每一个圈圈 一开始也画得很清晰 有时我们会迷茫踟蹰 就在转了许多个圈圈之后 突然醍醐灌顶 这就是我所要的幸福 于是开始学会 且行且珍惜 因为永远无法预知 等</description>
     </item>
     
     <item>
       <title>我们结婚了</title>
-      <link>https://pigflying.net/post/2012-01-13-%E6%88%91%E4%BB%AC%E7%BB%93%E5%A9%9A%E4%BA%86/</link>
+      <link>https://www.pigflying.net/post/2012-01-13-%E6%88%91%E4%BB%AC%E7%BB%93%E5%A9%9A%E4%BA%86/</link>
       <pubDate>Fri, 13 Jan 2012 09:00:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2012-01-13-%E6%88%91%E4%BB%AC%E7%BB%93%E5%A9%9A%E4%BA%86/</guid>
+      <guid>https://www.pigflying.net/post/2012-01-13-%E6%88%91%E4%BB%AC%E7%BB%93%E5%A9%9A%E4%BA%86/</guid>
       <description>关于爱你这件事情，喝醉了后我依然很清醒，因为很确定 爱本来就是一件千回百转的事情，不曾被离弃，不曾被伤害，也不会太深刻，它原来是一种经历 那是一种很奇妙的感觉，抑或一刹那的邂逅，抑或一辈子的厮守。到现在为</description>
     </item>
     
     <item>
       <title>漫步人生路</title>
-      <link>https://pigflying.net/post/2011-11-27-%E6%BC%AB%E6%AD%A5%E4%BA%BA%E7%94%9F%E8%B7%AF/</link>
+      <link>https://www.pigflying.net/post/2011-11-27-%E6%BC%AB%E6%AD%A5%E4%BA%BA%E7%94%9F%E8%B7%AF/</link>
       <pubDate>Sun, 27 Nov 2011 20:48:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-11-27-%E6%BC%AB%E6%AD%A5%E4%BA%BA%E7%94%9F%E8%B7%AF/</guid>
+      <guid>https://www.pigflying.net/post/2011-11-27-%E6%BC%AB%E6%AD%A5%E4%BA%BA%E7%94%9F%E8%B7%AF/</guid>
       <description>很多事来不及思考 就这样自然发生了 在丰富多彩的路上 注定经历风雨 让它自然而地来吧 让它悄然地去吧 就这样微笑地看着自己 漫步在这人生里 当往事悄然而走远 只留下清澈的心 让我们相互温暖 漫步在这阳光里 一个人，暖暖的初冬</description>
     </item>
     
     <item>
       <title>又是冬来临</title>
-      <link>https://pigflying.net/post/2011-11-07-%E5%8F%88%E6%98%AF%E5%86%AC%E6%9D%A5%E4%B8%B4/</link>
+      <link>https://www.pigflying.net/post/2011-11-07-%E5%8F%88%E6%98%AF%E5%86%AC%E6%9D%A5%E4%B8%B4/</link>
       <pubDate>Mon, 07 Nov 2011 20:21:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-11-07-%E5%8F%88%E6%98%AF%E5%86%AC%E6%9D%A5%E4%B8%B4/</guid>
+      <guid>https://www.pigflying.net/post/2011-11-07-%E5%8F%88%E6%98%AF%E5%86%AC%E6%9D%A5%E4%B8%B4/</guid>
       <description>几场细细的秋雨后，初冬已悄然来临。那天早晨，我走出房门时，黄得残然的叶子扑簌簌落了一地，心底打了个哆嗦，其实我更喜欢夏天。总以为夏天是欢欣的，而冬天总是悲凉的，但却又能启发人，就好象孤独的人不一定可悲</description>
     </item>
     
     <item>
       <title>修改 Chrome 默认的 Google搜索引擎</title>
-      <link>https://pigflying.net/post/2011-10-21-%E4%BF%AE%E6%94%B9-chrome-%E9%BB%98%E8%AE%A4%E7%9A%84-google%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/</link>
+      <link>https://www.pigflying.net/post/2011-10-21-%E4%BF%AE%E6%94%B9-chrome-%E9%BB%98%E8%AE%A4%E7%9A%84-google%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/</link>
       <pubDate>Fri, 21 Oct 2011 08:44:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-10-21-%E4%BF%AE%E6%94%B9-chrome-%E9%BB%98%E8%AE%A4%E7%9A%84-google%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/</guid>
+      <guid>https://www.pigflying.net/post/2011-10-21-%E4%BF%AE%E6%94%B9-chrome-%E9%BB%98%E8%AE%A4%E7%9A%84-google%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/</guid>
       <description>如果你肉身不在美帝，Google会根据你的IP将Chrome里的搜索引擎由Google.com变成本地的Google搜索，比如对于景德镇人民来说就是Google.com.hk的简体中文版。 但其实大家更</description>
     </item>
     
     <item>
       <title>上传GAE应用Connection reset by peer错误</title>
-      <link>https://pigflying.net/post/2011-10-17-%E4%B8%8A%E4%BC%A0gae%E5%BA%94%E7%94%A8connection-reset-by-peer%E9%94%99%E8%AF%AF/</link>
+      <link>https://www.pigflying.net/post/2011-10-17-%E4%B8%8A%E4%BC%A0gae%E5%BA%94%E7%94%A8connection-reset-by-peer%E9%94%99%E8%AF%AF/</link>
       <pubDate>Mon, 17 Oct 2011 09:39:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-10-17-%E4%B8%8A%E4%BC%A0gae%E5%BA%94%E7%94%A8connection-reset-by-peer%E9%94%99%E8%AF%AF/</guid>
+      <guid>https://www.pigflying.net/post/2011-10-17-%E4%B8%8A%E4%BC%A0gae%E5%BA%94%E7%94%A8connection-reset-by-peer%E9%94%99%E8%AF%AF/</guid>
       <description>由于众所周知的原因，我们在上传GAE应用的时候出现了问题Connection reset by peer 解决办法：appcfg.py --insecure update yourappok</description>
     </item>
     
     <item>
       <title>如何将GAE应用文件上传到Google App Engine的应用空间</title>
-      <link>https://pigflying.net/post/2011-10-17-%E5%A6%82%E4%BD%95%E5%B0%86gae%E5%BA%94%E7%94%A8%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%88%B0google-app-engine%E7%9A%84%E5%BA%94%E7%94%A8%E7%A9%BA%E9%97%B4/</link>
+      <link>https://www.pigflying.net/post/2011-10-17-%E5%A6%82%E4%BD%95%E5%B0%86gae%E5%BA%94%E7%94%A8%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%88%B0google-app-engine%E7%9A%84%E5%BA%94%E7%94%A8%E7%A9%BA%E9%97%B4/</link>
       <pubDate>Mon, 17 Oct 2011 09:05:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-10-17-%E5%A6%82%E4%BD%95%E5%B0%86gae%E5%BA%94%E7%94%A8%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%88%B0google-app-engine%E7%9A%84%E5%BA%94%E7%94%A8%E7%A9%BA%E9%97%B4/</guid>
+      <guid>https://www.pigflying.net/post/2011-10-17-%E5%A6%82%E4%BD%95%E5%B0%86gae%E5%BA%94%E7%94%A8%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%88%B0google-app-engine%E7%9A%84%E5%BA%94%E7%94%A8%E7%A9%BA%E9%97%B4/</guid>
       <description>如何将GAE应用文件上传到Google App Engine的应用空间上上传至GAE应用空间的方法有很多，网上我查到有三种方式，基本上都是根据appcfg.py演变而成，参数也一样。 方法一：GAE自带的app</description>
     </item>
     
     <item>
       <title>删除SVN目录的批处理</title>
-      <link>https://pigflying.net/post/2011-10-15-%E5%88%A0%E9%99%A4svn%E7%9B%AE%E5%BD%95%E7%9A%84%E6%89%B9%E5%A4%84%E7%90%86/</link>
+      <link>https://www.pigflying.net/post/2011-10-15-%E5%88%A0%E9%99%A4svn%E7%9B%AE%E5%BD%95%E7%9A%84%E6%89%B9%E5%A4%84%E7%90%86/</link>
       <pubDate>Sat, 15 Oct 2011 00:30:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-10-15-%E5%88%A0%E9%99%A4svn%E7%9B%AE%E5%BD%95%E7%9A%84%E6%89%B9%E5%A4%84%E7%90%86/</guid>
+      <guid>https://www.pigflying.net/post/2011-10-15-%E5%88%A0%E9%99%A4svn%E7%9B%AE%E5%BD%95%E7%9A%84%E6%89%B9%E5%A4%84%E7%90%86/</guid>
       <description>删除SVN目录的批处理文件批处理： @for /r . %%a in (.) do @if exist &amp;quot;%%a\.svn&amp;quot; rd /s /q &amp;quot;%%a\.svn&amp;quot; 也可以添加到注册表中： Windows Registry Editor Version 5.00 [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Folder\shell\DeleteSVN] @=&amp;quot;Delete SVN Folders&amp;quot; [HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Folder\shell\DeleteSVN\command] @=&amp;quot;cmd.exe /c \&amp;quot;TITLE Removing SVN Folders in %1 &amp;amp;&amp;amp; FOR /r \&amp;quot;%1\&amp;quot; %%f IN (.svn) DO RD /s /q \&amp;quot;%%f\&amp;quot; \&amp;quot;&amp;quot;</description>
     </item>
     
     <item>
       <title>特殊的日子</title>
-      <link>https://pigflying.net/post/2011-10-03-%E7%89%B9%E6%AE%8A%E7%9A%84%E6%97%A5%E5%AD%90/</link>
+      <link>https://www.pigflying.net/post/2011-10-03-%E7%89%B9%E6%AE%8A%E7%9A%84%E6%97%A5%E5%AD%90/</link>
       <pubDate>Mon, 03 Oct 2011 17:51:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-10-03-%E7%89%B9%E6%AE%8A%E7%9A%84%E6%97%A5%E5%AD%90/</guid>
+      <guid>https://www.pigflying.net/post/2011-10-03-%E7%89%B9%E6%AE%8A%E7%9A%84%E6%97%A5%E5%AD%90/</guid>
       <description>今天是个特殊的日子，真的很特殊，其实几天前就很特殊了。 B超结束，结果出来了：少许胎芽阴影和原始心管搏动，这意味着一个新的生命的诞生，那就是我的孩子，虽然现在还看不出男女。我们都没有心理准备，刚开始知道</description>
     </item>
     
     <item>
       <title>Blogger更换主页，较旧的帖子，较新的帖子</title>
-      <link>https://pigflying.net/post/2011-06-28-blogger%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A1%B5%E8%BE%83%E6%97%A7%E7%9A%84%E5%B8%96%E5%AD%90%E8%BE%83%E6%96%B0%E7%9A%84%E5%B8%96%E5%AD%90/</link>
+      <link>https://www.pigflying.net/post/2011-06-28-blogger%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A1%B5%E8%BE%83%E6%97%A7%E7%9A%84%E5%B8%96%E5%AD%90%E8%BE%83%E6%96%B0%E7%9A%84%E5%B8%96%E5%AD%90/</link>
       <pubDate>Tue, 28 Jun 2011 11:15:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-06-28-blogger%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A1%B5%E8%BE%83%E6%97%A7%E7%9A%84%E5%B8%96%E5%AD%90%E8%BE%83%E6%96%B0%E7%9A%84%E5%B8%96%E5%AD%90/</guid>
+      <guid>https://www.pigflying.net/post/2011-06-28-blogger%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A1%B5%E8%BE%83%E6%97%A7%E7%9A%84%E5%B8%96%E5%AD%90%E8%BE%83%E6%96%B0%E7%9A%84%E5%B8%96%E5%AD%90/</guid>
       <description>Blogger中默认的分页是较旧的帖子，较新的帖子，自己希望能改下，好像有点别扭吧 步骤如下设计====修改HTML===勾上扩展窗口小部件模板，查找然后用取代如果想要把较旧的帖子换成其他文字，则可以将</description>
     </item>
     
     <item>
       <title>如何在Blogger中张贴html代码</title>
-      <link>https://pigflying.net/post/2011-06-21-%E5%A6%82%E4%BD%95%E5%9C%A8blogger%E4%B8%AD%E5%BC%A0%E8%B4%B4html%E4%BB%A3%E7%A0%81/</link>
+      <link>https://www.pigflying.net/post/2011-06-21-%E5%A6%82%E4%BD%95%E5%9C%A8blogger%E4%B8%AD%E5%BC%A0%E8%B4%B4html%E4%BB%A3%E7%A0%81/</link>
       <pubDate>Tue, 21 Jun 2011 19:39:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-06-21-%E5%A6%82%E4%BD%95%E5%9C%A8blogger%E4%B8%AD%E5%BC%A0%E8%B4%B4html%E4%BB%A3%E7%A0%81/</guid>
+      <guid>https://www.pigflying.net/post/2011-06-21-%E5%A6%82%E4%BD%95%E5%9C%A8blogger%E4%B8%AD%E5%BC%A0%E8%B4%B4html%E4%BB%A3%E7%A0%81/</guid>
       <description>由于种种原因我们没有办法在Blogger中直接输入并显示HTML代码如:所以我们必需借用这个网上工具 http://www.csie.ntu.edu.tw/~piaip/unihtml/ 将我们需要张贴的代码进行格式转换，将要输入的HTML代码粘贴到Original中，点Convert</description>
     </item>
     
     <item>
       <title>Google Code SVN密码获取</title>
-      <link>https://pigflying.net/post/2011-06-10-google-code-svn%E5%AF%86%E7%A0%81%E8%8E%B7%E5%8F%96/</link>
+      <link>https://www.pigflying.net/post/2011-06-10-google-code-svn%E5%AF%86%E7%A0%81%E8%8E%B7%E5%8F%96/</link>
       <pubDate>Fri, 10 Jun 2011 10:43:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-06-10-google-code-svn%E5%AF%86%E7%A0%81%E8%8E%B7%E5%8F%96/</guid>
+      <guid>https://www.pigflying.net/post/2011-06-10-google-code-svn%E5%AF%86%E7%A0%81%E8%8E%B7%E5%8F%96/</guid>
       <description>如果你忘记了google code svn的密码，此密码在提交代码的时候使用，而非Google账户密码 你可以通过访问profile里setting选项。这里可以看到你的密码和修改密码。不过由于某些原因，访问这个</description>
     </item>
     
     <item>
       <title>那年夏天-贰</title>
-      <link>https://pigflying.net/post/2011-06-05-%E9%82%A3%E5%B9%B4%E5%A4%8F%E5%A4%A9-%E8%B4%B0/</link>
+      <link>https://www.pigflying.net/post/2011-06-05-%E9%82%A3%E5%B9%B4%E5%A4%8F%E5%A4%A9-%E8%B4%B0/</link>
       <pubDate>Sun, 05 Jun 2011 09:29:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-06-05-%E9%82%A3%E5%B9%B4%E5%A4%8F%E5%A4%A9-%E8%B4%B0/</guid>
+      <guid>https://www.pigflying.net/post/2011-06-05-%E9%82%A3%E5%B9%B4%E5%A4%8F%E5%A4%A9-%E8%B4%B0/</guid>
       <description>我愿相信 时间倒退 记忆的最美 合起双手 闭上双眼 再许下心愿 在某一天 回到从前 让他们都出现 当他们没改变 让时钟停在 那年的夏天 天空厚重的云阴霾得 恰似被抛弃的某些东西 。。。 。。。 刷牙时 颤动的手把牙膏撒了一身 尝了尝牙膏</description>
     </item>
     
     <item>
       <title>那年夏天-壹</title>
-      <link>https://pigflying.net/post/2011-06-05-%E9%82%A3%E5%B9%B4%E5%A4%8F%E5%A4%A9-%E5%A3%B9/</link>
+      <link>https://www.pigflying.net/post/2011-06-05-%E9%82%A3%E5%B9%B4%E5%A4%8F%E5%A4%A9-%E5%A3%B9/</link>
       <pubDate>Sun, 05 Jun 2011 09:27:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-06-05-%E9%82%A3%E5%B9%B4%E5%A4%8F%E5%A4%A9-%E5%A3%B9/</guid>
+      <guid>https://www.pigflying.net/post/2011-06-05-%E9%82%A3%E5%B9%B4%E5%A4%8F%E5%A4%A9-%E5%A3%B9/</guid>
       <description>长大以后现在的我 忘记了快乐 人来人去 留在身边的朋友不多 那些天真 纯纯的笑 哪去了 洁白翅膀美丽天使不见了 翻了了很久，在硬盘里找了这篇没有题目的字，再次看到时，觉得很遥远，那一点一滴却又开始在心里流动。半夜里的</description>
     </item>
     
     <item>
       <title>word2007切换全屏显示</title>
-      <link>https://pigflying.net/post/2011-05-31-word2007%E5%88%87%E6%8D%A2%E5%85%A8%E5%B1%8F%E6%98%BE%E7%A4%BA/</link>
+      <link>https://www.pigflying.net/post/2011-05-31-word2007%E5%88%87%E6%8D%A2%E5%85%A8%E5%B1%8F%E6%98%BE%E7%A4%BA/</link>
       <pubDate>Tue, 31 May 2011 13:58:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-05-31-word2007%E5%88%87%E6%8D%A2%E5%85%A8%E5%B1%8F%E6%98%BE%E7%A4%BA/</guid>
+      <guid>https://www.pigflying.net/post/2011-05-31-word2007%E5%88%87%E6%8D%A2%E5%85%A8%E5%B1%8F%E6%98%BE%E7%A4%BA/</guid>
       <description>有说按F11，在我的电脑测试不成功，找啊找，终于找到了 最上面：自定义快速访问工具栏——-&amp;gt;其他命令——–&amp;gt;从下列位置选择命令（选：不在功能区中的命令）就出现切换全屏视图按钮了。</description>
     </item>
     
     <item>
       <title>Make the change</title>
-      <link>https://pigflying.net/post/2011-05-28-make-the-change/</link>
+      <link>https://www.pigflying.net/post/2011-05-28-make-the-change/</link>
       <pubDate>Sat, 28 May 2011 07:03:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2011-05-28-make-the-change/</guid>
+      <guid>https://www.pigflying.net/post/2011-05-28-make-the-change/</guid>
       <description>本来周末想睡个懒觉的，结果比以前醒得还早，这个社会太复杂了，其实是里面的人复杂了 每个人都小心翼翼的藏着各种鬼胎，等着有一天让他降临人世 我们永远无法预见这里面的人何时把何种鬼胎面目展现在我们面前，唯一能</description>
     </item>
     
     <item>
       <title>平平淡淡过我们自己的日子</title>
-      <link>https://pigflying.net/post/2010-10-25-%E5%B9%B3%E5%B9%B3%E6%B7%A1%E6%B7%A1%E8%BF%87%E6%88%91%E4%BB%AC%E8%87%AA%E5%B7%B1%E7%9A%84%E6%97%A5%E5%AD%90/</link>
+      <link>https://www.pigflying.net/post/2010-10-25-%E5%B9%B3%E5%B9%B3%E6%B7%A1%E6%B7%A1%E8%BF%87%E6%88%91%E4%BB%AC%E8%87%AA%E5%B7%B1%E7%9A%84%E6%97%A5%E5%AD%90/</link>
       <pubDate>Mon, 25 Oct 2010 20:12:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2010-10-25-%E5%B9%B3%E5%B9%B3%E6%B7%A1%E6%B7%A1%E8%BF%87%E6%88%91%E4%BB%AC%E8%87%AA%E5%B7%B1%E7%9A%84%E6%97%A5%E5%AD%90/</guid>
+      <guid>https://www.pigflying.net/post/2010-10-25-%E5%B9%B3%E5%B9%B3%E6%B7%A1%E6%B7%A1%E8%BF%87%E6%88%91%E4%BB%AC%E8%87%AA%E5%B7%B1%E7%9A%84%E6%97%A5%E5%AD%90/</guid>
       <description>我们都是凡人,都不是十全十美的,所以不会也不要要求太多.我只想有个称之家的地方,有个孩子,我们一直平平淡淡的过自己的生活 你的话,只能证明你真的很在乎我,和我们一起经历过的日子 所以,不要担心,冬天快要来</description>
     </item>
     
     <item>
       <title>Google Reader And Gmail</title>
-      <link>https://pigflying.net/post/2010-10-24-google-reader-and-gmail/</link>
+      <link>https://www.pigflying.net/post/2010-10-24-google-reader-and-gmail/</link>
       <pubDate>Sun, 24 Oct 2010 10:37:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2010-10-24-google-reader-and-gmail/</guid>
+      <guid>https://www.pigflying.net/post/2010-10-24-google-reader-and-gmail/</guid>
       <description>今天Google Reader和Gmail都出现了不能访问的情况,很是震惊!!!</description>
     </item>
     
     <item>
       <title>给Blogger更改favicon(地址栏里的小图标)</title>
-      <link>https://pigflying.net/post/2010-10-16-%E7%BB%99blogger%E6%9B%B4%E6%94%B9favicon%E5%9C%B0%E5%9D%80%E6%A0%8F%E9%87%8C%E7%9A%84%E5%B0%8F%E5%9B%BE%E6%A0%87/</link>
+      <link>https://www.pigflying.net/post/2010-10-16-%E7%BB%99blogger%E6%9B%B4%E6%94%B9favicon%E5%9C%B0%E5%9D%80%E6%A0%8F%E9%87%8C%E7%9A%84%E5%B0%8F%E5%9B%BE%E6%A0%87/</link>
       <pubDate>Sat, 16 Oct 2010 11:20:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2010-10-16-%E7%BB%99blogger%E6%9B%B4%E6%94%B9favicon%E5%9C%B0%E5%9D%80%E6%A0%8F%E9%87%8C%E7%9A%84%E5%B0%8F%E5%9B%BE%E6%A0%87/</guid>
+      <guid>https://www.pigflying.net/post/2010-10-16-%E7%BB%99blogger%E6%9B%B4%E6%94%B9favicon%E5%9C%B0%E5%9D%80%E6%A0%8F%E9%87%8C%E7%9A%84%E5%B0%8F%E5%9B%BE%E6%A0%87/</guid>
       <description>可以这样实施： 制作一个16×16大小的png格式的小icon 将icon上传到相册，获得图片地址，推荐用 http://www.iconj.com/generator.php 打开blogger——布局——修改html，搜索找到head标签,把下面的一段代码插入到之前,保</description>
     </item>
     
     <item>
       <title>如果明天</title>
-      <link>https://pigflying.net/post/2010-10-14-%E5%A6%82%E6%9E%9C%E6%98%8E%E5%A4%A9/</link>
+      <link>https://www.pigflying.net/post/2010-10-14-%E5%A6%82%E6%9E%9C%E6%98%8E%E5%A4%A9/</link>
       <pubDate>Thu, 14 Oct 2010 22:12:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2010-10-14-%E5%A6%82%E6%9E%9C%E6%98%8E%E5%A4%A9/</guid>
+      <guid>https://www.pigflying.net/post/2010-10-14-%E5%A6%82%E6%9E%9C%E6%98%8E%E5%A4%A9/</guid>
       <description>如果还有明天，我要告诉你，，，嘿嘿，，啥呢，明天再告诉你如果没有明天，我要告诉你，，，嘿嘿，，我想你</description>
     </item>
     
     <item>
       <title>怎样隐藏去掉Blogger自带的navbar搜索工具条</title>
-      <link>https://pigflying.net/post/2010-10-14-%E6%80%8E%E6%A0%B7%E9%9A%90%E8%97%8F%E5%8E%BB%E6%8E%89blogger%E8%87%AA%E5%B8%A6%E7%9A%84navbar%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%85%B7%E6%9D%A1/</link>
+      <link>https://www.pigflying.net/post/2010-10-14-%E6%80%8E%E6%A0%B7%E9%9A%90%E8%97%8F%E5%8E%BB%E6%8E%89blogger%E8%87%AA%E5%B8%A6%E7%9A%84navbar%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%85%B7%E6%9D%A1/</link>
       <pubDate>Thu, 14 Oct 2010 16:11:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2010-10-14-%E6%80%8E%E6%A0%B7%E9%9A%90%E8%97%8F%E5%8E%BB%E6%8E%89blogger%E8%87%AA%E5%B8%A6%E7%9A%84navbar%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%85%B7%E6%9D%A1/</guid>
+      <guid>https://www.pigflying.net/post/2010-10-14-%E6%80%8E%E6%A0%B7%E9%9A%90%E8%97%8F%E5%8E%BB%E6%8E%89blogger%E8%87%AA%E5%B8%A6%E7%9A%84navbar%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%85%B7%E6%9D%A1/</guid>
       <description>关于删除 blogger.com 顶部的 navbar 工具条的方法我找了好久好久，但大部分的方法都是通过 css 样式达到隐藏 navbar 工具条的目的，但是页面还是会加载关于navbar工具条的代码，还有一个方法是通过转换到旧模板设置ftp发布可以取彻底</description>
     </item>
     
     <item>
       <title>台电TL-C520刷机</title>
-      <link>https://pigflying.net/post/2010-07-02-%E5%8F%B0%E7%94%B5tl-c520%E5%88%B7%E6%9C%BA/</link>
+      <link>https://www.pigflying.net/post/2010-07-02-%E5%8F%B0%E7%94%B5tl-c520%E5%88%B7%E6%9C%BA/</link>
       <pubDate>Fri, 02 Jul 2010 02:38:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2010-07-02-%E5%8F%B0%E7%94%B5tl-c520%E5%88%B7%E6%9C%BA/</guid>
+      <guid>https://www.pigflying.net/post/2010-07-02-%E5%8F%B0%E7%94%B5tl-c520%E5%88%B7%E6%9C%BA/</guid>
       <description>五一前后买了台电MP4,型号是TL-C520,买这个机子的时候是冲着它支持PDF阅读而去的,买回来了之后才感觉有些差强人意啊,无奸不商啊,广告做得也是有点夸张. 为了让它的性能更好的发挥出来,我觉得刷机</description>
     </item>
     
     <item>
       <title>Blogger绑定域名</title>
-      <link>https://pigflying.net/post/2010-07-02-blogger%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D/</link>
+      <link>https://www.pigflying.net/post/2010-07-02-blogger%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D/</link>
       <pubDate>Fri, 02 Jul 2010 01:19:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2010-07-02-blogger%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D/</guid>
+      <guid>https://www.pigflying.net/post/2010-07-02-blogger%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D/</guid>
       <description>第一，使用 Google blogger一定要有耐心和恒心，因为 blogger 在中国大陆一直是出于被封杀的地位——这也从一个侧面说明blogger是多么的优秀。“翻墙”是一个Google blogger必须具备的基本功，如果你不</description>
     </item>
     
     <item>
       <title>Google中国又在进一步远离我们</title>
-      <link>https://pigflying.net/post/2010-06-29-google%E4%B8%AD%E5%9B%BD%E5%8F%88%E5%9C%A8%E8%BF%9B%E4%B8%80%E6%AD%A5%E8%BF%9C%E7%A6%BB%E6%88%91%E4%BB%AC/</link>
+      <link>https://www.pigflying.net/post/2010-06-29-google%E4%B8%AD%E5%9B%BD%E5%8F%88%E5%9C%A8%E8%BF%9B%E4%B8%80%E6%AD%A5%E8%BF%9C%E7%A6%BB%E6%88%91%E4%BB%AC/</link>
       <pubDate>Tue, 29 Jun 2010 13:58:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2010-06-29-google%E4%B8%AD%E5%9B%BD%E5%8F%88%E5%9C%A8%E8%BF%9B%E4%B8%80%E6%AD%A5%E8%BF%9C%E7%A6%BB%E6%88%91%E4%BB%AC/</guid>
+      <guid>https://www.pigflying.net/post/2010-06-29-google%E4%B8%AD%E5%9B%BD%E5%8F%88%E5%9C%A8%E8%BF%9B%E4%B8%80%E6%AD%A5%E8%BF%9C%E7%A6%BB%E6%88%91%E4%BB%AC/</guid>
       <description>今天访问google.cn的时候悲剧了,开始提示我们已移至google.com.hk,并且g.cn也悲剧了,提示后自动跳转到google.com.hk</description>
     </item>
     
     <item>
       <title>大学生拒绝加入传销组织被活活打死-刚蛋</title>
-      <link>https://pigflying.net/post/2010-03-18-%E5%A4%A7%E5%AD%A6%E7%94%9F%E6%8B%92%E7%BB%9D%E5%8A%A0%E5%85%A5%E4%BC%A0%E9%94%80%E7%BB%84%E7%BB%87%E8%A2%AB%E6%B4%BB%E6%B4%BB%E6%89%93%E6%AD%BB-%E5%88%9A%E8%9B%8B/</link>
+      <link>https://www.pigflying.net/post/2010-03-18-%E5%A4%A7%E5%AD%A6%E7%94%9F%E6%8B%92%E7%BB%9D%E5%8A%A0%E5%85%A5%E4%BC%A0%E9%94%80%E7%BB%84%E7%BB%87%E8%A2%AB%E6%B4%BB%E6%B4%BB%E6%89%93%E6%AD%BB-%E5%88%9A%E8%9B%8B/</link>
       <pubDate>Thu, 18 Mar 2010 17:33:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2010-03-18-%E5%A4%A7%E5%AD%A6%E7%94%9F%E6%8B%92%E7%BB%9D%E5%8A%A0%E5%85%A5%E4%BC%A0%E9%94%80%E7%BB%84%E7%BB%87%E8%A2%AB%E6%B4%BB%E6%B4%BB%E6%89%93%E6%AD%BB-%E5%88%9A%E8%9B%8B/</guid>
+      <guid>https://www.pigflying.net/post/2010-03-18-%E5%A4%A7%E5%AD%A6%E7%94%9F%E6%8B%92%E7%BB%9D%E5%8A%A0%E5%85%A5%E4%BC%A0%E9%94%80%E7%BB%84%E7%BB%87%E8%A2%AB%E6%B4%BB%E6%B4%BB%E6%89%93%E6%AD%BB-%E5%88%9A%E8%9B%8B/</guid>
       <description>新闻链接{:target=&amp;quot;_blank&amp;quot;} 将近半年后我竟然才得知刚蛋的消息,并且是死讯,竟然还是一个师姐告诉我的,我很震惊!不知道该说什么,没和他在一起住后和他联系就几乎没怎么联</description>
     </item>
     
     <item>
       <title>Google要离开了?</title>
-      <link>https://pigflying.net/post/2010-01-13-google%E8%A6%81%E7%A6%BB%E5%BC%80%E4%BA%86/</link>
+      <link>https://www.pigflying.net/post/2010-01-13-google%E8%A6%81%E7%A6%BB%E5%BC%80%E4%BA%86/</link>
       <pubDate>Wed, 13 Jan 2010 12:36:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2010-01-13-google%E8%A6%81%E7%A6%BB%E5%BC%80%E4%BA%86/</guid>
+      <guid>https://www.pigflying.net/post/2010-01-13-google%E8%A6%81%E7%A6%BB%E5%BC%80%E4%BA%86/</guid>
       <description>今天刚登上Gtalk,突然发现关于Google撤离中国的消息铺天盖地,中国政府把Google真的惹火了,离开也许也是另一种美,无论Google是否离开,我会一如既往的支持它!刚才看了下谷歌热榜,WOW</description>
     </item>
     
     <item>
       <title>人生是一种无法抗拒的的前进</title>
-      <link>https://pigflying.net/post/2009-12-16-%E4%BA%BA%E7%94%9F%E6%98%AF%E4%B8%80%E7%A7%8D%E6%97%A0%E6%B3%95%E6%8A%97%E6%8B%92%E7%9A%84%E7%9A%84%E5%89%8D%E8%BF%9B/</link>
+      <link>https://www.pigflying.net/post/2009-12-16-%E4%BA%BA%E7%94%9F%E6%98%AF%E4%B8%80%E7%A7%8D%E6%97%A0%E6%B3%95%E6%8A%97%E6%8B%92%E7%9A%84%E7%9A%84%E5%89%8D%E8%BF%9B/</link>
       <pubDate>Wed, 16 Dec 2009 15:42:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-12-16-%E4%BA%BA%E7%94%9F%E6%98%AF%E4%B8%80%E7%A7%8D%E6%97%A0%E6%B3%95%E6%8A%97%E6%8B%92%E7%9A%84%E7%9A%84%E5%89%8D%E8%BF%9B/</guid>
+      <guid>https://www.pigflying.net/post/2009-12-16-%E4%BA%BA%E7%94%9F%E6%98%AF%E4%B8%80%E7%A7%8D%E6%97%A0%E6%B3%95%E6%8A%97%E6%8B%92%E7%9A%84%E7%9A%84%E5%89%8D%E8%BF%9B/</guid>
       <description>工作后日子仿佛真的如流水般汩汩地流走 平淡得让人觉得每天都是在同一天中生活 缺少了激情 缺少了争论 日子仿佛就是日子 还不如白开水 白开水起码还能让感觉到烫 浑浑噩噩 不对 因为我们都还是在很努力地生活着 有的 在自己的工</description>
     </item>
     
     <item>
       <title>被Google收录了</title>
-      <link>https://pigflying.net/post/2009-12-08-%E8%A2%ABgoogle%E6%94%B6%E5%BD%95%E4%BA%86/</link>
+      <link>https://www.pigflying.net/post/2009-12-08-%E8%A2%ABgoogle%E6%94%B6%E5%BD%95%E4%BA%86/</link>
       <pubDate>Tue, 08 Dec 2009 09:02:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-12-08-%E8%A2%ABgoogle%E6%94%B6%E5%BD%95%E4%BA%86/</guid>
+      <guid>https://www.pigflying.net/post/2009-12-08-%E8%A2%ABgoogle%E6%94%B6%E5%BD%95%E4%BA%86/</guid>
       <description>昨天下午突然搜索了下自己的博客,哈哈,已经被Google收录了!速度很快啊,之前网上有人说长则需要几个月的时间,还好,我的收录差不多只用了两周,百度一下,还是没有,同一天提交收录的,不过其他的博客倒是</description>
     </item>
     
     <item>
       <title>老婆随笔</title>
-      <link>https://pigflying.net/post/2009-12-02-%E8%80%81%E5%A9%86%E9%9A%8F%E7%AC%94/</link>
+      <link>https://www.pigflying.net/post/2009-12-02-%E8%80%81%E5%A9%86%E9%9A%8F%E7%AC%94/</link>
       <pubDate>Wed, 02 Dec 2009 22:33:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-12-02-%E8%80%81%E5%A9%86%E9%9A%8F%E7%AC%94/</guid>
+      <guid>https://www.pigflying.net/post/2009-12-02-%E8%80%81%E5%A9%86%E9%9A%8F%E7%AC%94/</guid>
       <description>如果有一天我将不在 你是否心中将我掩埋 夕阳深情出巡抹粉黛 海岸其乐融融俏小孩 残缺葬送了浓烈的缘 我依然会惦记我的爱</description>
     </item>
     
     <item>
       <title>狮子座流星雨</title>
-      <link>https://pigflying.net/post/2009-11-19-%E7%8B%AE%E5%AD%90%E5%BA%A7%E6%B5%81%E6%98%9F%E9%9B%A8/</link>
+      <link>https://www.pigflying.net/post/2009-11-19-%E7%8B%AE%E5%AD%90%E5%BA%A7%E6%B5%81%E6%98%9F%E9%9B%A8/</link>
       <pubDate>Thu, 19 Nov 2009 10:04:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-19-%E7%8B%AE%E5%AD%90%E5%BA%A7%E6%B5%81%E6%98%9F%E9%9B%A8/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-19-%E7%8B%AE%E5%AD%90%E5%BA%A7%E6%B5%81%E6%98%9F%E9%9B%A8/</guid>
       <description>听媒体报道说会有流星雨 我心里很期待 凌晨四点的时候自己醒来了 拉开窗帘向夜空望去足足等了半个小时 竟然一颗也没有 太失望了 远远比不上小时候的那次流星雨 同事都还鼾声如雷呢 嗨我也只好去睡觉咯看看别人拍到的流星雨</description>
     </item>
     
     <item>
       <title>老婆的宣言</title>
-      <link>https://pigflying.net/post/2009-11-17-%E8%80%81%E5%A9%86%E7%9A%84%E5%AE%A3%E8%A8%80/</link>
+      <link>https://www.pigflying.net/post/2009-11-17-%E8%80%81%E5%A9%86%E7%9A%84%E5%AE%A3%E8%A8%80/</link>
       <pubDate>Tue, 17 Nov 2009 20:42:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-17-%E8%80%81%E5%A9%86%E7%9A%84%E5%AE%A3%E8%A8%80/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-17-%E8%80%81%E5%A9%86%E7%9A%84%E5%AE%A3%E8%A8%80/</guid>
       <description>2009年11月17日20:30分 看到了老婆白了也胖了 啥也不是冻的 老婆说爱要越挫越勇 我说你说什么 她说这是爱的宣言 你一定要记住哦 我说你再说一遍吧</description>
     </item>
     
     <item>
       <title>Google Wave提名了!!!</title>
-      <link>https://pigflying.net/post/2009-11-17-google-wave%E6%8F%90%E5%90%8D%E4%BA%86/</link>
+      <link>https://www.pigflying.net/post/2009-11-17-google-wave%E6%8F%90%E5%90%8D%E4%BA%86/</link>
       <pubDate>Tue, 17 Nov 2009 14:42:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-17-google-wave%E6%8F%90%E5%90%8D%E4%BA%86/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-17-google-wave%E6%8F%90%E5%90%8D%E4%BA%86/</guid>
       <description>前些日子在别人那里搞到了Google Wave的邀请,然后自己用了下,由于用的人很少,自己感觉不怎么会玩啊。毕竟只是小范围内的，今天又打开了 Google Wave 一看,Oh,我也可以邀请别人了,有十个名额,赶快给几个同事</description>
     </item>
     
     <item>
       <title>2009&amp;暴雪</title>
-      <link>https://pigflying.net/post/2009-11-14-2009%E6%9A%B4%E9%9B%AA/</link>
+      <link>https://www.pigflying.net/post/2009-11-14-2009%E6%9A%B4%E9%9B%AA/</link>
       <pubDate>Sat, 14 Nov 2009 15:17:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-14-2009%E6%9A%B4%E9%9B%AA/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-14-2009%E6%9A%B4%E9%9B%AA/</guid>
       <description>这是2009的第二场雪，一场突如其来的暴雪，农历的日子才刚刚走到九月廿七 我狠狠地吃了一惊，那雪，明明已经有一人多深了 给老妈打了电话,家里也下了一天了。据说是五十四年一遇，很多几十年一遇的事情仿佛我还遇</description>
     </item>
     
     <item>
       <title>静静的我</title>
-      <link>https://pigflying.net/post/2009-11-14-%E9%9D%99%E9%9D%99%E7%9A%84%E6%88%91/</link>
+      <link>https://www.pigflying.net/post/2009-11-14-%E9%9D%99%E9%9D%99%E7%9A%84%E6%88%91/</link>
       <pubDate>Sat, 14 Nov 2009 14:32:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-14-%E9%9D%99%E9%9D%99%E7%9A%84%E6%88%91/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-14-%E9%9D%99%E9%9D%99%E7%9A%84%E6%88%91/</guid>
       <description>静,好喜欢静的感觉 也许是因为我从小寂静习惯了 也许是因为我孤独习惯了 也许是因为我不善于言语 让心灵的孤寂又来到我身边 喜欢一个人独自望着窗外的夜空 喜欢一个人去看日落 喜欢一个人在海边感觉海的气息 文静的人或许总</description>
     </item>
     
     <item>
       <title>冬天随笔</title>
-      <link>https://pigflying.net/post/2009-11-14-%E5%86%AC%E5%A4%A9%E9%9A%8F%E7%AC%94/</link>
+      <link>https://www.pigflying.net/post/2009-11-14-%E5%86%AC%E5%A4%A9%E9%9A%8F%E7%AC%94/</link>
       <pubDate>Sat, 14 Nov 2009 14:31:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-14-%E5%86%AC%E5%A4%A9%E9%9A%8F%E7%AC%94/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-14-%E5%86%AC%E5%A4%A9%E9%9A%8F%E7%AC%94/</guid>
       <description>瞪着窗外，翻阅天气微寒的冬 又是一年了 浮躁的心情已被晚冬凉飕飕的空气覆上一层薄薄的霜片，想动弹，却缺乏力气了 窗外 眺望那些世界上大同小异的人间风景 最近很冷 冻结了一切 我们的热情 我们的感情 我们的爱情 我们的风景</description>
     </item>
     
     <item>
       <title>遗世独立-遐想</title>
-      <link>https://pigflying.net/post/2009-11-14-%E9%81%97%E4%B8%96%E7%8B%AC%E7%AB%8B-%E9%81%90%E6%83%B3/</link>
+      <link>https://www.pigflying.net/post/2009-11-14-%E9%81%97%E4%B8%96%E7%8B%AC%E7%AB%8B-%E9%81%90%E6%83%B3/</link>
       <pubDate>Sat, 14 Nov 2009 14:31:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-14-%E9%81%97%E4%B8%96%E7%8B%AC%E7%AB%8B-%E9%81%90%E6%83%B3/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-14-%E9%81%97%E4%B8%96%E7%8B%AC%E7%AB%8B-%E9%81%90%E6%83%B3/</guid>
       <description>其实，我没有大家想象的那么勇敢，假如世界都忘记了我，你会忘记我么？假如世界都忘记了你，我依然不会忘记自己 所以，我开始在眷恋中憧憬 我是我，我永远是我自己，一个外表和内心都无法改变的自己，而且我知道我是谁</description>
     </item>
     
     <item>
       <title>陨·2007</title>
-      <link>https://pigflying.net/post/2009-11-14-%E9%99%A82007/</link>
+      <link>https://www.pigflying.net/post/2009-11-14-%E9%99%A82007/</link>
       <pubDate>Sat, 14 Nov 2009 14:31:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-14-%E9%99%A82007/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-14-%E9%99%A82007/</guid>
       <description>2006 年的最后一天，熄灯了似乎怎么也睡不着，不知在期望什么，也许只是一条短信吧。 2007 年的元旦，大家在二号楼的一个教室里一起包饺子，蓝色的毛衣上沾满了惨白的面粉，红色的羽绒服掉泪了，我看得很清楚。最后吃到的饺</description>
     </item>
     
     <item>
       <title>难眠</title>
-      <link>https://pigflying.net/post/2009-11-14-%E9%9A%BE%E7%9C%A0/</link>
+      <link>https://www.pigflying.net/post/2009-11-14-%E9%9A%BE%E7%9C%A0/</link>
       <pubDate>Sat, 14 Nov 2009 14:31:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-14-%E9%9A%BE%E7%9C%A0/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-14-%E9%9A%BE%E7%9C%A0/</guid>
       <description>压力归根到底来自己于自己 很多时候，自己以为是世界给了自己无尽的痛楚，难以承受的压力，默默忍受中不免有牢骚，很是不明白 昨天晚上我一直在想，假如没有了蚊子，我会不会睡得者 天亮了，蚊子们吃饱了，我也睡着了 或</description>
     </item>
     
     <item>
       <title>这个夏天 我们渐行渐远</title>
-      <link>https://pigflying.net/post/2009-11-14-%E8%BF%99%E4%B8%AA%E5%A4%8F%E5%A4%A9-%E6%88%91%E4%BB%AC%E6%B8%90%E8%A1%8C%E6%B8%90%E8%BF%9C/</link>
+      <link>https://www.pigflying.net/post/2009-11-14-%E8%BF%99%E4%B8%AA%E5%A4%8F%E5%A4%A9-%E6%88%91%E4%BB%AC%E6%B8%90%E8%A1%8C%E6%B8%90%E8%BF%9C/</link>
       <pubDate>Sat, 14 Nov 2009 14:30:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-14-%E8%BF%99%E4%B8%AA%E5%A4%8F%E5%A4%A9-%E6%88%91%E4%BB%AC%E6%B8%90%E8%A1%8C%E6%B8%90%E8%BF%9C/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-14-%E8%BF%99%E4%B8%AA%E5%A4%8F%E5%A4%A9-%E6%88%91%E4%BB%AC%E6%B8%90%E8%A1%8C%E6%B8%90%E8%BF%9C/</guid>
       <description>看到帅写的这些文字,我并没有吃惊,甚至都在意料之中,共同的时代造就了相似的我们,只是在些许的文字中找到了过去的最真实的自己.我们从小玩到大,却突然发觉,在这个夏天我们早已长大&amp;hellip;. 阿a相亲</description>
     </item>
     
     <item>
       <title>迷失</title>
-      <link>https://pigflying.net/post/2009-11-14-%E8%BF%B7%E5%A4%B1/</link>
+      <link>https://www.pigflying.net/post/2009-11-14-%E8%BF%B7%E5%A4%B1/</link>
       <pubDate>Sat, 14 Nov 2009 14:30:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-14-%E8%BF%B7%E5%A4%B1/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-14-%E8%BF%B7%E5%A4%B1/</guid>
       <description>去了趟城里,骑着自行车,一个人 风很大 所有烦恼应该都抛弃了 车的轮子走在城里的路上,我望了下天空,又看了一下周围的人们,突然我仿佛到了另外一个世界,枉然若失.灵魂脱壳了 不知道为什么 以前从来也没有这些感觉 人</description>
     </item>
     
     <item>
       <title>过去的好时光-Le temps des fleurs</title>
-      <link>https://pigflying.net/post/2009-11-14-%E8%BF%87%E5%8E%BB%E7%9A%84%E5%A5%BD%E6%97%B6%E5%85%89-le-temps-des-fleurs/</link>
+      <link>https://www.pigflying.net/post/2009-11-14-%E8%BF%87%E5%8E%BB%E7%9A%84%E5%A5%BD%E6%97%B6%E5%85%89-le-temps-des-fleurs/</link>
       <pubDate>Sat, 14 Nov 2009 14:29:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-14-%E8%BF%87%E5%8E%BB%E7%9A%84%E5%A5%BD%E6%97%B6%E5%85%89-le-temps-des-fleurs/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-14-%E8%BF%87%E5%8E%BB%E7%9A%84%E5%A5%BD%E6%97%B6%E5%85%89-le-temps-des-fleurs/</guid>
       <description>过年了 一年又要过去了 突然翻起了家里的旧相册 从老奶奶那时候的黑白照片 到大一在海滨兔崽子给我的特写 我开始怀念过去的好时光 开始缅怀那些曾经感动的瞬间 老奶奶为几岁的姐姐梳头发 每当我看到这张照片的时候 总是感到特</description>
     </item>
     
     <item>
       <title>结束·开始</title>
-      <link>https://pigflying.net/post/2009-11-14-%E7%BB%93%E6%9D%9F%E5%BC%80%E5%A7%8B/</link>
+      <link>https://www.pigflying.net/post/2009-11-14-%E7%BB%93%E6%9D%9F%E5%BC%80%E5%A7%8B/</link>
       <pubDate>Sat, 14 Nov 2009 14:28:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-14-%E7%BB%93%E6%9D%9F%E5%BC%80%E5%A7%8B/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-14-%E7%BB%93%E6%9D%9F%E5%BC%80%E5%A7%8B/</guid>
       <description>考研结束了 不知道应该是高兴还是为自己感到可惜 当初那么一冲动一切都化为了乌有 不过我换了另外一种方式继续努力 无论别人怎么样对待自己都不要放弃自己心中的信念 新年聚餐回来我在公交车上骂起了自己因为还是没有明白</description>
     </item>
     
     <item>
       <title>漂浮蔚蓝</title>
-      <link>https://pigflying.net/post/2009-11-14-%E6%BC%82%E6%B5%AE%E8%94%9A%E8%93%9D/</link>
+      <link>https://www.pigflying.net/post/2009-11-14-%E6%BC%82%E6%B5%AE%E8%94%9A%E8%93%9D/</link>
       <pubDate>Sat, 14 Nov 2009 14:27:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-14-%E6%BC%82%E6%B5%AE%E8%94%9A%E8%93%9D/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-14-%E6%BC%82%E6%B5%AE%E8%94%9A%E8%93%9D/</guid>
       <description>当我们的那些曾经变成回忆 海浪的汹涌不再苍白的无力 依旧能看见过去天空的蔚蓝 一双眼睛在迷茫中没有目的 雪后突然出现的血红的狐狸 在寒冬开始登陆暖暖的梦里 穿过长夜我跃出海面的静谧 像绽开的水仙花的生日贺礼 欢笑顿时</description>
     </item>
     
     <item>
       <title>七月，我的心灵自由漫步</title>
-      <link>https://pigflying.net/post/2009-11-14-%E4%B8%83%E6%9C%88%E6%88%91%E7%9A%84%E5%BF%83%E7%81%B5%E8%87%AA%E7%94%B1%E6%BC%AB%E6%AD%A5/</link>
+      <link>https://www.pigflying.net/post/2009-11-14-%E4%B8%83%E6%9C%88%E6%88%91%E7%9A%84%E5%BF%83%E7%81%B5%E8%87%AA%E7%94%B1%E6%BC%AB%E6%AD%A5/</link>
       <pubDate>Sat, 14 Nov 2009 14:26:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-14-%E4%B8%83%E6%9C%88%E6%88%91%E7%9A%84%E5%BF%83%E7%81%B5%E8%87%AA%E7%94%B1%E6%BC%AB%E6%AD%A5/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-14-%E4%B8%83%E6%9C%88%E6%88%91%E7%9A%84%E5%BF%83%E7%81%B5%E8%87%AA%E7%94%B1%E6%BC%AB%E6%AD%A5/</guid>
       <description>仿佛还沉浸在新年的钟声里，转眼就七月了,转眼又是一个学期过去了 勋的陨落让我很是震惊，我开始思考 连日来的电闪雷鸣狂风骤雨，起初还感受着痛快淋漓，循环几日后，心，在炎热潮湿的气流中发霉了一般，似乎还可以看</description>
     </item>
     
     <item>
       <title>摩天轮</title>
-      <link>https://pigflying.net/post/2009-11-13-%E6%91%A9%E5%A4%A9%E8%BD%AE/</link>
+      <link>https://www.pigflying.net/post/2009-11-13-%E6%91%A9%E5%A4%A9%E8%BD%AE/</link>
       <pubDate>Fri, 13 Nov 2009 12:40:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-13-%E6%91%A9%E5%A4%A9%E8%BD%AE/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-13-%E6%91%A9%E5%A4%A9%E8%BD%AE/</guid>
       <description>没有想到 也许是想到的太晚 联想到只有死神的模样 再早一点可能会很好 老同学聚会竟然没有太多的话语 大家都在埋着头吃 还是在心里热情地呼喊 咔咔快门的声音 不断地记录每个瞬间 哪怕是空空如也 大学了变化了太多 眼神中于是添</description>
     </item>
     
     <item>
       <title>新年伊始</title>
-      <link>https://pigflying.net/post/2009-11-13-%E6%96%B0%E5%B9%B4%E4%BC%8A%E5%A7%8B/</link>
+      <link>https://www.pigflying.net/post/2009-11-13-%E6%96%B0%E5%B9%B4%E4%BC%8A%E5%A7%8B/</link>
       <pubDate>Fri, 13 Nov 2009 12:40:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-13-%E6%96%B0%E5%B9%B4%E4%BC%8A%E5%A7%8B/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-13-%E6%96%B0%E5%B9%B4%E4%BC%8A%E5%A7%8B/</guid>
       <description>白驹过隙 睁开双眼又是一年 有时候在想 怎么样才可以让时间慢下来 甚至停下来 沉溺于爱因斯坦的时间简史 又在奢靡于能够坐上时光机器 超越时空回到过去 只是梦想 至少在我存在的这个时代里 麻木经常映入眼帘的字眼 没有灵魂的生</description>
     </item>
     
     <item>
       <title>有鱼的地方</title>
-      <link>https://pigflying.net/post/2009-11-13-%E6%9C%89%E9%B1%BC%E7%9A%84%E5%9C%B0%E6%96%B9/</link>
+      <link>https://www.pigflying.net/post/2009-11-13-%E6%9C%89%E9%B1%BC%E7%9A%84%E5%9C%B0%E6%96%B9/</link>
       <pubDate>Fri, 13 Nov 2009 12:40:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-13-%E6%9C%89%E9%B1%BC%E7%9A%84%E5%9C%B0%E6%96%B9/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-13-%E6%9C%89%E9%B1%BC%E7%9A%84%E5%9C%B0%E6%96%B9/</guid>
       <description>连绵的秋雨终于送来了雪 一夜间树木都脱下了丑陋的外衣,露出更狰狞的面孔 我以为冬天是最美丽的季节…冰冷的小溪里还有鱼在游 一对对,一堆堆,很相爱 让人想到过去,未来 不知道这些日子 你还要承担多少哀伤 继续支撑破碎</description>
     </item>
     
     <item>
       <title>梦醒了,我笑了</title>
-      <link>https://pigflying.net/post/2009-11-13-%E6%A2%A6%E9%86%92%E4%BA%86%E6%88%91%E7%AC%91%E4%BA%86/</link>
+      <link>https://www.pigflying.net/post/2009-11-13-%E6%A2%A6%E9%86%92%E4%BA%86%E6%88%91%E7%AC%91%E4%BA%86/</link>
       <pubDate>Fri, 13 Nov 2009 12:39:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-13-%E6%A2%A6%E9%86%92%E4%BA%86%E6%88%91%E7%AC%91%E4%BA%86/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-13-%E6%A2%A6%E9%86%92%E4%BA%86%E6%88%91%E7%AC%91%E4%BA%86/</guid>
       <description>梦在一点一点的远去 梦里的人也随之渐渐消散 直到看不清楚你的面容 不知从何时开始对你有了思念的感觉 那种震彻心扉，惶恐不安的焦躁 时刻掌握着我的心跳波动的频率，等待似已成为我生活的中心，而你却不知道 依然潇洒的游</description>
     </item>
     
     <item>
       <title>梦魇</title>
-      <link>https://pigflying.net/post/2009-11-13-%E6%A2%A6%E9%AD%87/</link>
+      <link>https://www.pigflying.net/post/2009-11-13-%E6%A2%A6%E9%AD%87/</link>
       <pubDate>Fri, 13 Nov 2009 12:39:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-13-%E6%A2%A6%E9%AD%87/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-13-%E6%A2%A6%E9%AD%87/</guid>
       <description>午睡的时候的那个梦魇 噩梦 缠绕着某个没有思想的躯壳 像是被人摆弄的提线木偶 一步一步 被拉向无低的深渊 原来是人们心里的肮脏玷污自己 没有硝烟的,我就这样逃离,或者说被人抛弃 如果微笑 微笑的那个人会是我 猛然的降温让</description>
     </item>
     
     <item>
       <title>死鱼</title>
-      <link>https://pigflying.net/post/2009-11-13-%E6%AD%BB%E9%B1%BC/</link>
+      <link>https://www.pigflying.net/post/2009-11-13-%E6%AD%BB%E9%B1%BC/</link>
       <pubDate>Fri, 13 Nov 2009 12:39:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-13-%E6%AD%BB%E9%B1%BC/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-13-%E6%AD%BB%E9%B1%BC/</guid>
       <description>那只本来会游泳的鱼已经不再会游泳了 它也不知道为什么 鳍变白了 鱼鳞在一片一片的脱落 它的眼睛在流血，血融进了大海，流向了远方，它也不知道在哪里，也不想知道在哪里 那个本来很幸福的男孩已经不再幸福了，他也不知道</description>
     </item>
     
     <item>
       <title>下一分钟·下一天·下一年</title>
-      <link>https://pigflying.net/post/2009-11-13-%E4%B8%8B%E4%B8%80%E5%88%86%E9%92%9F%E4%B8%8B%E4%B8%80%E5%A4%A9%E4%B8%8B%E4%B8%80%E5%B9%B4/</link>
+      <link>https://www.pigflying.net/post/2009-11-13-%E4%B8%8B%E4%B8%80%E5%88%86%E9%92%9F%E4%B8%8B%E4%B8%80%E5%A4%A9%E4%B8%8B%E4%B8%80%E5%B9%B4/</link>
       <pubDate>Fri, 13 Nov 2009 12:38:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-13-%E4%B8%8B%E4%B8%80%E5%88%86%E9%92%9F%E4%B8%8B%E4%B8%80%E5%A4%A9%E4%B8%8B%E4%B8%80%E5%B9%B4/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-13-%E4%B8%8B%E4%B8%80%E5%88%86%E9%92%9F%E4%B8%8B%E4%B8%80%E5%A4%A9%E4%B8%8B%E4%B8%80%E5%B9%B4/</guid>
       <description>突然外面响起了鞭炮的声音 要过年了 第一次感觉到新年的到了 不只是麻木 一直好像以为我还停留在过去 下一年在期待 梦魇在慢慢地褪去 有点想家了 年味儿仿佛越来越浓 来到北京两个月 从一开始都不怎么知道坐车 到每天匆匆地穿梭</description>
     </item>
     
     <item>
       <title>其实他怎么也不明白</title>
-      <link>https://pigflying.net/post/2009-11-13-%E5%85%B6%E5%AE%9E%E4%BB%96%E6%80%8E%E4%B9%88%E4%B9%9F%E4%B8%8D%E6%98%8E%E7%99%BD/</link>
+      <link>https://www.pigflying.net/post/2009-11-13-%E5%85%B6%E5%AE%9E%E4%BB%96%E6%80%8E%E4%B9%88%E4%B9%9F%E4%B8%8D%E6%98%8E%E7%99%BD/</link>
       <pubDate>Fri, 13 Nov 2009 12:38:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-13-%E5%85%B6%E5%AE%9E%E4%BB%96%E6%80%8E%E4%B9%88%E4%B9%9F%E4%B8%8D%E6%98%8E%E7%99%BD/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-13-%E5%85%B6%E5%AE%9E%E4%BB%96%E6%80%8E%E4%B9%88%E4%B9%9F%E4%B8%8D%E6%98%8E%E7%99%BD/</guid>
       <description>其实他怎么也不知道 今天会下雨 天气预报说，今天会有雷阵雨的 那么后天呢他只希望明天的天气会是晴朗的 其实他怎么也不知道，今天会离开 一个人孤独的火车 行驶在雨后凝重的车轨上 关于未来 关于那些种种的种种 或许只有未来</description>
     </item>
     
     <item>
       <title>冷&amp;风</title>
-      <link>https://pigflying.net/post/2009-11-13-%E5%86%B7%E9%A3%8E/</link>
+      <link>https://www.pigflying.net/post/2009-11-13-%E5%86%B7%E9%A3%8E/</link>
       <pubDate>Fri, 13 Nov 2009 12:38:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-13-%E5%86%B7%E9%A3%8E/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-13-%E5%86%B7%E9%A3%8E/</guid>
       <description>突然想起悬铃木的一句话「男朋友也就那样」 一个人走在大街上 四处的张望 光溜溜的路面上 留不住一个足迹 冰冷的空气 据说有零下十二度 把邂逅定格在一个雪后的早上和一个暖暖的午后 「老板，一杯冻奶茶」 早上奶茶呵护般的馨</description>
     </item>
     
     <item>
       <title>天狗来临</title>
-      <link>https://pigflying.net/post/2009-11-13-%E5%A4%A9%E7%8B%97%E6%9D%A5%E4%B8%B4/</link>
+      <link>https://www.pigflying.net/post/2009-11-13-%E5%A4%A9%E7%8B%97%E6%9D%A5%E4%B8%B4/</link>
       <pubDate>Fri, 13 Nov 2009 12:37:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-13-%E5%A4%A9%E7%8B%97%E6%9D%A5%E4%B8%B4/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-13-%E5%A4%A9%E7%8B%97%E6%9D%A5%E4%B8%B4/</guid>
       <description>日食了 不会明白夜的黑 一棵树 静静的 永远也不知道疲倦 一年又一年 不知是不是年轮消磨了它的睿智 于是我们渐渐地开始忽略了 忘记了那年夏天 大暴雨中摇摇欲坠可怜的小树苗 一句话 傻傻的永远 也不会放弃 一天又一天</description>
     </item>
     
     <item>
       <title>宁静的夏天</title>
-      <link>https://pigflying.net/post/2009-11-13-%E5%AE%81%E9%9D%99%E7%9A%84%E5%A4%8F%E5%A4%A9/</link>
+      <link>https://www.pigflying.net/post/2009-11-13-%E5%AE%81%E9%9D%99%E7%9A%84%E5%A4%8F%E5%A4%A9/</link>
       <pubDate>Fri, 13 Nov 2009 12:37:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-13-%E5%AE%81%E9%9D%99%E7%9A%84%E5%A4%8F%E5%A4%A9/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-13-%E5%AE%81%E9%9D%99%E7%9A%84%E5%A4%8F%E5%A4%A9/</guid>
       <description>夏夜的星空 直至失去后才知道珍惜 懂得珍惜后才知道早已失去 我独自望着天琴座的方向 寻觅你曾经的踪迹 在不远处 我发现了你 而你的眼睛里 闪烁的分明是泪光 我继续沉默着 独自遥望星空 聆听着来自天琴座 悠扬而忧伤的乐声</description>
     </item>
     
     <item>
       <title>很久以前的茉莉香片</title>
-      <link>https://pigflying.net/post/2009-11-13-%E5%BE%88%E4%B9%85%E4%BB%A5%E5%89%8D%E7%9A%84%E8%8C%89%E8%8E%89%E9%A6%99%E7%89%87/</link>
+      <link>https://www.pigflying.net/post/2009-11-13-%E5%BE%88%E4%B9%85%E4%BB%A5%E5%89%8D%E7%9A%84%E8%8C%89%E8%8E%89%E9%A6%99%E7%89%87/</link>
       <pubDate>Fri, 13 Nov 2009 12:36:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-13-%E5%BE%88%E4%B9%85%E4%BB%A5%E5%89%8D%E7%9A%84%E8%8C%89%E8%8E%89%E9%A6%99%E7%89%87/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-13-%E5%BE%88%E4%B9%85%E4%BB%A5%E5%89%8D%E7%9A%84%E8%8C%89%E8%8E%89%E9%A6%99%E7%89%87/</guid>
       <description>很久没有再翻开茉莉香片了 小白依旧记得那本皱皱书的来历 是谁还轻轻回放那首依然退色的歌 亲手沏了一杯茉莉香片 果然是苦了很多 是岁月的酿造么 茶雾的缭绕中 朦胧的落叶 竟然在愀然的夏 最令人心牵神往的季节 仿佛无助的孩童</description>
     </item>
     
     <item>
       <title>一路上有你</title>
-      <link>https://pigflying.net/post/2009-11-13-%E4%B8%80%E8%B7%AF%E4%B8%8A%E6%9C%89%E4%BD%A0/</link>
+      <link>https://www.pigflying.net/post/2009-11-13-%E4%B8%80%E8%B7%AF%E4%B8%8A%E6%9C%89%E4%BD%A0/</link>
       <pubDate>Fri, 13 Nov 2009 12:33:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2009-11-13-%E4%B8%80%E8%B7%AF%E4%B8%8A%E6%9C%89%E4%BD%A0/</guid>
+      <guid>https://www.pigflying.net/post/2009-11-13-%E4%B8%80%E8%B7%AF%E4%B8%8A%E6%9C%89%E4%BD%A0/</guid>
       <description>人们常常会这么说 你不明白我现在的心情 其实人们恰好弄反了 心情不好的时候 人们身上长满了锋利的刺 又把身边可爱的人刺伤 心情不好的时候 会想到放弃 放弃很多以前辛苦努力得到的东西 于是有了无数个的如果 当初其实生命恰恰</description>
     </item>
     
     <item>
       <title>只有你</title>
-      <link>https://pigflying.net/post/2008-07-01-%E5%8F%AA%E6%9C%89%E4%BD%A0/</link>
+      <link>https://www.pigflying.net/post/2008-07-01-%E5%8F%AA%E6%9C%89%E4%BD%A0/</link>
       <pubDate>Tue, 01 Jul 2008 20:02:00 +0800</pubDate>
       
-      <guid>https://pigflying.net/post/2008-07-01-%E5%8F%AA%E6%9C%89%E4%BD%A0/</guid>
+      <guid>https://www.pigflying.net/post/2008-07-01-%E5%8F%AA%E6%9C%89%E4%BD%A0/</guid>
       <description>也许你只有你知道你自己 或许你也不知道你自己 到底谁知道你自己 谁也不知道我知道不</description>
     </item>
     
     <item>
       <title></title>
-      <link>https://pigflying.net/about/</link>
+      <link>https://www.pigflying.net/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://pigflying.net/about/</guid>
+      <guid>https://www.pigflying.net/about/</guid>
       <description>pigletfly Hi, I am Adam Wang(aka pigletfly).</description>
     </item>
     

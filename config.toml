@@ -14,7 +14,7 @@ languageCode = "zh-hans"  # For RSS, view https://www.rssboard.org/rss-language-
 defaultContentLanguage = "zh-hans"  # For HTML page, now support: en, zh-hans, zh-hant, ja, nl, pl, it
 
 summaryLength = 100 # Custom summary length, add <!--more--> in post file to custom split point
-paginate = 10
+pagination.pagerSize = 10
 
 googleAnalytics = "UA-34929546-1" # Set your Google Analytics UA here
 

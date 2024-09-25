@@ -1,1 +1,337 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kubernetes on 大海里的木鱼</title><link>https://www.pigflying.net/tags/kubernetes/</link><description>Recent content in kubernetes on 大海里的木鱼</description><generator>Hugo -- gohugo.io</generator><language>zh-hans</language><lastBuildDate>Sun, 08 Aug 2021 09:34:00 +0800</lastBuildDate><atom:link href="https://www.pigflying.net/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>(译)16 件关于 Kubernetes APIs 和 CRDs 你所不知道的事情</title><link>https://www.pigflying.net/post/2021-08-08-k8s-api/</link><pubDate>Sun, 08 Aug 2021 09:34:00 +0800</pubDate><guid>https://www.pigflying.net/post/2021-08-08-k8s-api/</guid><description>第 15 个会震惊到你！ 如果你对 kubernetes 很熟悉，那么你很可能对 kubernetes API 和 controller 有所了解：调和循环查看 api 中存储的数据，并且努力让集群中的状态和声明的 API 状态相匹配。 这是一个相当强大的模式，随着时间的推移，已经证明了它的价值。</description></item><item><title>kubernetes 1.5.1 搭建过程</title><link>https://www.pigflying.net/post/2016-12-20-k8s-setup/</link><pubDate>Tue, 20 Dec 2016 09:34:00 +0800</pubDate><guid>https://www.pigflying.net/post/2016-12-20-k8s-setup/</guid><description>最近折腾了下 kubernetes 1.5.1,记录下安装过程。 安装相关依赖(master node 都需要操作) sudo tee /etc/yum.repos.d/docker.repo &amp;lt;&amp;lt;-'EOF' [dockerrepo] name=Docker Repository baseurl=https://yum.dockerproject.org/repo/experimental/centos/7/ enabled=1 gpgcheck=1 gpgkey=https://yum.dockerproject.org/gpg EOF yum install -y golang yum install docker-engine -y yum -y install ntp yum install net-tools bridge-utils bind-utils -y yum install socat -y yum install -y ebtables systemctl enable ntpd systemctl start ntpd systemctl enable docker systemctl start docker systemctl status docker setenforce 0 systemctl disable iptables-services firewalld</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes on 大海里的木鱼</title><link>https://www.pigflying.net/tags/kubernetes/</link><description>Recent content in Kubernetes on 大海里的木鱼</description><generator>Hugo</generator><language>zh-hans</language><lastBuildDate>Sun, 08 Aug 2021 09:34:00 +0800</lastBuildDate><atom:link href="https://www.pigflying.net/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>(译)16 件关于 Kubernetes APIs 和 CRDs 你所不知道的事情</title><link>https://www.pigflying.net/post/2021-08-08-k8s-api/</link><pubDate>Sun, 08 Aug 2021 09:34:00 +0800</pubDate><guid>https://www.pigflying.net/post/2021-08-08-k8s-api/</guid><description>&lt;p>第 15 个会震惊到你！&lt;/p>
+&lt;p>如果你对 kubernetes 很熟悉，那么你很可能对 kubernetes API 和 controller 有所了解：调和循环查看 api 中存储的数据，并且努力让集群中的状态和声明的 API 状态相匹配。&lt;/p>
+&lt;p>这是一个相当强大的模式，随着时间的推移，已经证明了它的价值。但是，尽管核心思想看起来很简单，但一旦你从表面上看，有很多细节可能会令人惊讶。&lt;/p>
+&lt;h3 id="1-并不是所有的-kubernetes-apis-都有对应的控制器">1. 并不是所有的 kubernetes apis 都有对应的控制器&lt;/h3>
+&lt;p>kubernetes 控制平面通常分为两种职责：API 和控制器。&lt;/p>
+&lt;p>大多数 kubernetes 发行版都在单独的 Pod 中运行核心 apis 和核心控制器:&lt;/p>
+&lt;pre>&lt;code class="language-bash">$ k -n kube-system get pods
+NAME READY STATUS RESTARTS AGE
+kube-apiserver-kind-control-plane 1/1 Running 0 23m
+kube-controller-manager-kind-control-plane 1/1 Running 0 23m
+&lt;/code>&lt;/pre>
+&lt;p>&lt;code>kube-apiserver&lt;/code> 主要负责将 api 数据存储到后端存储中，通常是 etcd。&lt;/p>
+&lt;p>&lt;code>kube-controller-manager&lt;/code> 在这些 api 的内容上运行一系列的调和循环。随着时间的推移，这些控制器确保达到（或不达到）预期的状态，并通过 api 报告状态。&lt;/p>
+&lt;p>而通常这就是 kubernetes API 的工作方式：通过 API 创建期望的状态，期望的状态被存储，控制器以非同步方式工作，使集群状态与期望的状态相匹配。&lt;/p>
+&lt;p>例如：deployment api 允许你创建一个定义 Pod 的 deployment对象。Deployment 控制器（在controller-manager中运行）根据deployment 对象创建副本集并更新状态。&lt;/p>
+&lt;p>如果你完全停止控制器管理器，并试图创建一个像 deployment 这样的对象，这一点就特别明显。&lt;/p>
+&lt;p>如果没有 controller-manager 运行，deployment 对象（仍然可以被创建！），但是没有状态，也不会创建 Pod。&lt;/p>
+&lt;p>但实际上，有一小部分 api 并不直接由控制器以这种方式管理。&lt;code>SubjectAccessReview&lt;/code> 就是其中之一。&lt;/p>
+&lt;p>即使没有 controller-manager，SubjectAccessReview 也会响应一个状态。&lt;/p>
+&lt;p>还有一个你可能很熟悉的 api，它也可以在没有 controller-manager 的情况下使用。&lt;/p>
+&lt;p>Pods 在没有 controller-manager 的情况下也可以工作! 在这种情况下，kubelet 是 pod 的控制器。&lt;/p>
+&lt;p>到目前为止，大部分的内容可能都不太令人惊讶。但对于其他一些主题来说，这是一个很好的背景材料。&lt;/p>
+&lt;h3 id="2-group-version-和-resource-确定-apis">2. Group, Version 和 Resource 确定 APIs.&lt;/h3>
+&lt;p>Group, Version 和 Kind 确定对象.
+kubernetes 中的大多数 API 都是处理对象的。&lt;/p>
+&lt;p>对象和一个 group, version, kind 和 resource 绑定:&lt;/p>
+&lt;p>kind 是你在 kube 对象清单顶部看到的熟悉的名字。 例如，kind: Deployment，kind: Role，等等。
+每个对象都可以通过一个 API 端点来访问。每个 kind 都与一些 resource 相关联，这是用于通过 API 访问对象的名称。对于大多数对象，reresource 只是 kind 名称的一个变体（例如，Kind:Pod 可以通过 pods resource 类型访问）。有些 API 可能会在不同的 resource 名称下暴露相同的 Kind，但这是很罕见的。
+每个 kind 都有一组 versions，它们可能有不同的模式。
+每个 kind 被组织成一个 group。
+apiVersion 是一个特定对象的 group 和 version 的组合。&lt;/p>
+&lt;p>看一个单个对象：&lt;/p>
+&lt;pre>&lt;code>apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+ namespace: default
+ name: pod-reader
+rules:
+- apiGroups: [&amp;quot;&amp;quot;] 
+ resources: [&amp;quot;pods&amp;quot;]
+ verbs: [&amp;quot;get&amp;quot;, &amp;quot;watch&amp;quot;, &amp;quot;list&amp;quot;]
+&lt;/code>&lt;/pre>
+&lt;p>这表明 group 是 rbac.authorization.k8s.io，version 是 v1 和 kind 是 Role。&lt;/p>
+&lt;p>这个对象中没有任何东西告诉你 resource 是什么。kube apiserver 维护着 resource 类型 &amp;lt;-&amp;gt; kind 的映射，kubectl 和 client-go 等 kube 客户端也是如此。在这些客户端项目和相关文档中，这被称为 &amp;ldquo;REST Mapping&amp;rdquo;。&lt;/p>
+&lt;p>一旦你知道了 resource，就有了建立 URL 的简单规则，例如：&lt;/p>
+&lt;p>/apis/GROUP/VERSION/RESOURCE/NAME 用于获取集群范围的对象。
+/apis/GROUP/VERSION/namespaces/NAMESPACE/RESOURCETYPE/NAME 用于获取 Namespace 范围的对象。
+在 &lt;a href="https://kubernetes.io/docs/reference/using-api/api-concepts/" target="_blank">api-concepts&lt;/a> 文档中有更多细节。&lt;/p>
+&lt;h3 id="3-对象可以在所有的-api-版本中访问">3. 对象可以在所有的 api 版本中访问&lt;/h3>
+&lt;p>任何给定了 Group 和 Kind 的对象，可以通过 apiserver 支持的全部版本访问。&lt;/p>
+&lt;p>我可以在 v1beta1 创建一个 ingress 对象，然后在 v1 获取同样的对象。这些版本有完全不同的 schema，但 API 会将其转换为我请求的版本。或者，我可以在 v1 创建一个 ingress 对象，然后在 v1beta1 获取它。&lt;/p>
+&lt;p>如果你不请求一个特定的版本，kubectl 将以 api 的首选版本请求对象，这可能与你创建的版本不同。&lt;/p>
+&lt;p>你可以用 kubectl get &amp;ndash;raw /apis/GROUP 来了解首选版本是什么。例如，要找到 ingress 的支持的版本和首选版本&lt;/p>
+&lt;pre>&lt;code>$ kubectl get --raw /apis/networking.k8s.io
+{
+ &amp;quot;kind&amp;quot;: &amp;quot;APIGroup&amp;quot;,
+ &amp;quot;apiVersion&amp;quot;: &amp;quot;v1&amp;quot;,
+ &amp;quot;name&amp;quot;: &amp;quot;networking.k8s.io&amp;quot;,
+ &amp;quot;versions&amp;quot;: [
+ {
+ &amp;quot;groupVersion&amp;quot;: &amp;quot;networking.k8s.io/v1&amp;quot;,
+ &amp;quot;version&amp;quot;: &amp;quot;v1&amp;quot;
+ },
+ {
+ &amp;quot;groupVersion&amp;quot;: &amp;quot;networking.k8s.io/v1beta1&amp;quot;,
+ &amp;quot;version&amp;quot;: &amp;quot;v1beta1&amp;quot;
+ }
+ ],
+ &amp;quot;preferredVersion&amp;quot;: {
+ &amp;quot;groupVersion&amp;quot;: &amp;quot;networking.k8s.io/v1&amp;quot;,
+ &amp;quot;version&amp;quot;: &amp;quot;v1&amp;quot;
+ }
+}
+&lt;/code>&lt;/pre>
+&lt;h3 id="4-存储在-etcd-中的对象的版本可能与提交的版本和首选版本不同">4. 存储在 etcd 中的对象的版本可能与提交的版本和首选版本不同。&lt;/h3>
+&lt;p>对于每个 group 和 resource ，kube-apiserver 知道：&lt;/p>
+&lt;p>服务的版本：api 中可用的版本列表
+可解码版本：apiserver 知道如何从存储中解码的版本列表。这可能与服务的版本不同。
+存储或可编码版本：apiserver 在存储到 etcd 之前将转换为该版本。
+首选版本：如果没有指定，kubectl 将使用该版本进行请求。&lt;/p>
+&lt;p>如果你向 apiserver 提交一个对象，而它与存储版本不匹配，apiserver 将在将其存储到 etcd 之前将其转换为存储版本。(更准确地说，它首先将其转换为内部版本，然后再将其转换回存储版本 etcd，但这是一个实现细节）&lt;/p>
+&lt;p>没有一种面向用户的方法可以在运行时确定一个 API 的存储版本（至少现在还没有）。
+存储版本通常是首选版本，但这可以被覆盖。&lt;/p>
+&lt;p>例如，在 kube 1.20 中，ingress 的首选版本是 v1，但存储版本是 v1beta1。这可以通过直接查看 apiserver 存储在 etcd 中的数据来了解：&lt;/p>
+&lt;h3 id="5-改变一个对象的存储版本需要用较新的-apiserver-写入">5. 改变一个对象的存储版本需要用较新的 apiserver 写入&lt;/h3>
+&lt;p>由于存储版本在 kube-apiserver 中是硬编码的，要想让一个对象的存储版本更新，唯一的办法就是更新到一个较新的 kube-apiserver，为该对象的API配置一个不同的存储版本。&lt;/p>
+&lt;p>一旦 apiserver 进入新的存储版本，该对象必须被覆盖。它不会被自动转换（后面会有更多关于自动转换的内容）。&lt;/p>
+&lt;p>举个例子：&lt;/p>
+&lt;ul>
+&lt;li>在 kube 1.20 中创建一个 v1 的 ingress。将其存储在 v1beta1 中。&lt;/li>
+&lt;li>将 apiserver 更新到 1.21。&lt;/li>
+&lt;li>检查 etcd 中的数据是否仍在 v1beta1 处。&lt;/li>
+&lt;li>用新的 apiserver 覆盖 ingress，以看到它存储在 v1 的位置。&lt;/li>
+&lt;/ul>
+&lt;h3 id="6-api-版本可能有棘轮验证但仍然是可圆滑的">6. API 版本可能有棘轮验证（但仍然是可圆滑的）&lt;/h3>
+&lt;p>apiserver 可能会选择在不同的版本之间增加验证。在旧的 api 版本下有效的东西，在新的 apiversion 下可能就无效了&lt;/p>
+&lt;p>单独来看，这可能并不令人惊讶。可能令人惊讶的是棘轮验证与版本往返的交互方式：你能从 apiserver 获得一个对象并不意味着你能创建完全相同的对象。&lt;/p>
+&lt;p>例如，CustomResourceDefinition API 在 v1beta1 和 v1 之间采用了棘轮式验证，以强制执行v1下的结构模式。&lt;/p>
+&lt;p>这意味着：&lt;/p>
+&lt;ul>
+&lt;li>你可以用一个非结构性模式创建一个 v1beta1 的 CRD。&lt;/li>
+&lt;li>你可以从 v1 版 CRD api 中获得该 CRD（版本是可循环的）。&lt;/li>
+&lt;li>如果你删除了这个 CRD，然后用你刚从 API 那里得到的 v1 版 CRD 重新创建它，它将无法创建。&lt;/li>
+&lt;li>你可以在 v1beta1版本创建 CRD 后，在 v1 版本更新它（验证是渐进式的）。&lt;/li>
+&lt;/ul>
+&lt;h3 id="7-存在-storageversion-api">7. 存在 StorageVersion API&lt;/h3>
+&lt;p>在 1.20+ 版本中，有一个 StorageVersion API，可以提供存储在 etcd 中的对象的信息，但它必须明确启用。&lt;/p>
+&lt;p>这是启用 API 类型所需的配置。&lt;/p>
+&lt;pre>&lt;code>kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+featureGates:
+ StorageVersionAPI: true
+ APIServerIdentity: true
+runtimeConfig:
+ &amp;quot;internal.apiserver.k8s.io/v1alpha1&amp;quot;: &amp;quot;true&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>一旦启用，对于每个 group/resource，API 提供：&lt;/p>
+&lt;ul>
+&lt;li>当前可以解码的版本集合&lt;/li>
+&lt;li>用于编码的版本 - 即存储版本，用于编码对象以存储在etcd中。&lt;/li>
+&lt;/ul>
+&lt;p>API 为 apiserver 的每个实例提供这一信息。&lt;/p>
+&lt;p>这个 API 目前不是面向用户的（因此有内部前缀）。它用于在 apiserver 升级期间围绕存储版本做出决定，其中可能有多个 apiservers 以多个版本运行。增强版有更多的细节，也请看API文档。&lt;/p>
+&lt;p>这里有一个 deployment API 的例子：&lt;/p>
+&lt;pre>&lt;code>apiVersion: internal.apiserver.k8s.io/v1alpha1
+kind: StorageVersion
+metadata:
+ creationTimestamp: &amp;quot;2021-06-04T17:16:57Z&amp;quot;
+ name: apps.deployments
+ resourceVersion: &amp;quot;52&amp;quot;
+ uid: 0b80b0f3-72b0-4af6-adfd-e93eb4b4c29f
+spec: {}
+status:
+ commonEncodingVersion: apps/v1
+ conditions:
+ - lastTransitionTime: &amp;quot;2021-06-04T17:16:57Z&amp;quot;
+ message: Common encoding version set
+ reason: CommonEncodingVersionSet
+ status: &amp;quot;True&amp;quot;
+ type: AllEncodingVersionsEqual
+ storageVersions:
+ - apiServerID: kube-apiserver-803c62b1-340f-4055-93ca-44aba8a35574
+ decodableVersions:
+ - apps/v1
+ - apps/v1beta2
+ - apps/v1beta1
+ encodingVersion: apps/v1
+&lt;/code>&lt;/pre>
+&lt;p>在这种情况下，由于只有一个 apiserver，我们可以确信部署将被存储在 apps/v1 版本中。&lt;/p>
+&lt;ol start="8">
+&lt;li>安装kube-storage-version-migrator来自动迁移存储版本&lt;/li>
+&lt;/ol>
+&lt;p>在上一节中，我们看到一个对象需要用一个新的apiserver来重写，以便改变存储版本。&lt;/p>
+&lt;p>在kubernetes中，默认情况下没有任何东西可以执行这个操作。kube-storage-version-migrator是一个可选的组件，它将对集群中的所有对象自动进行获取和输入工作流程。&lt;/p>
+&lt;p>在 OpenShift 中，kube-storage-version-migrator 是默认启用的，但它并不自动运行（必须手动触发）。&lt;/p>
+&lt;h3 id="9-crd-定义了新的-api不仅仅是对象">9. CRD 定义了新的 API（不仅仅是对象）。&lt;/h3>
+&lt;p>当你创建 CRD 来定义 api 中的一个新对象时，你所定义的东西与 apiserver 为核心 apis 所定义的东西是一样的：&lt;/p>
+&lt;ul>
+&lt;li>一个新类型的对象的组、种类和资源类型&lt;/li>
+&lt;li>服务的版本&lt;/li>
+&lt;li>存储的版本&lt;/li>
+&lt;li>可解码的版本&lt;/li>
+&lt;li>所有可解码版本的模式&lt;/li>
+&lt;li>对象是命名空间还是集群范围的&lt;/li>
+&lt;li>API 中的新 URL 端点&lt;/li>
+&lt;/ul>
+&lt;p>生成的新 API 将遵循 kubernetes api 惯例：这意味着它们是可轮换的，只能有一个存储版本。&lt;/p>
+&lt;h3 id="10-所有的-api-都是集群范围内的甚至有命名空间的-crd">10. 所有的 API 都是集群范围内的，甚至有命名空间的 CRD&lt;/h3>
+&lt;p>CRD有一个 scope 字段。&lt;/p>
+&lt;p>这决定了你可以创建的对象的范围，它不包括 api 本身的可用性。&lt;/p>
+&lt;p>如果范围设置为 Cluster，那么 API 路由看起来像：&lt;/p>
+&lt;p>/apis/GROUP/VERSION/RESOURCE/NAME&lt;/p>
+&lt;p>如果相反，范围被设置为Namespaced，API路由看起来像：&lt;/p>
+&lt;p>/apis/GROUP/VERSION/namespaces/NAMESPACE/RESOURCETYPE/NAME&lt;/p>
+&lt;p>而跨越所有命名空间的命名空间资源可以通过以下方式进行查询：&lt;/p>
+&lt;p>/apis/GROUP/VERSION/RESOURCETYPE&lt;/p>
+&lt;p>在集群和命名空间范围的API中，组和版本已经被整个集群所认可。不存在只在单一命名空间中可用的API的概念。&lt;/p>
+&lt;h3 id="11-一个-crd-的存储版本决定了新对象的存储方式">11. 一个 CRD 的存储版本决定了新对象的存储方式。&lt;/h3>
+&lt;p>就像kube-apiserver在存储到etcd时选择使用的版本一样，作为CRD开发者，你也必须选择存储到etcd的版本。&lt;/p>
+&lt;p>CRD版本上的存储：true标志表明对象将如何被存储下去。它不影响现有的存储对象。&lt;/p>
+&lt;h3 id="12-crd-的-storageversions-列出了每一个曾是存储版本的版本而不是实际在etcd中的版本">12. CRD 的 storageVersions 列出了每一个曾是存储版本的版本（而不是实际在etcd中的版本）。&lt;/h3>
+&lt;p>crd 的状态块有一个 storedVersions 字段。&lt;/p>
+&lt;pre>&lt;code>status:
+ acceptedNames:
+ kind: CronTab
+ listKind: CronTabList
+ plural: crontabs
+ shortNames:
+ - ct
+ singular: crontab
+ conditions:
+ - lastTransitionTime: &amp;quot;2021-06-16T14:47:48Z&amp;quot;
+ message: no conflicts found
+ reason: NoConflicts
+ status: &amp;quot;True&amp;quot;
+ type: NamesAccepted
+ - lastTransitionTime: &amp;quot;2021-06-16T14:47:48Z&amp;quot;
+ message: the initial names have been accepted
+ reason: InitialNamesAccepted
+ status: &amp;quot;True&amp;quot;
+ type: Established
+ storedVersions:
+ - v1beta1
+ - v1
+&lt;/code>&lt;/pre>
+&lt;p>这个字段表示每一个作为存储版本的版本（即在规范中设置了存储：true），与etcd中存在的存储版本没有关系。&lt;/p>
+&lt;h3 id="13-你不能从-crd-中删除一个版本直到它被从状态中移除">13. 你不能从 CRD 中删除一个版本，直到它被从状态中移除。&lt;/h3>
+&lt;p>.status.storedVersions，是以前被设置为api的存储版本的记录，表明在etcd中可能仍有数据存储在这些版本下。你不想删除一个可解码的版本，直到存储中没有任何可能需要解码的东西了。&lt;/p>
+&lt;p>由于这个原因，如果一个版本被列为存储版本，就不可能完全从CRD中删除该版本。&lt;/p>
+&lt;p>请注意，对于任何版本，served都可以被设置为false&amp;ndash;不再提供服务的存储版本仍然可以在较新的apiversions下被取走。&lt;/p>
+&lt;h3 id="14-存储版本必须从crd的状态中手动删除">14. 存储版本必须从CRD的状态中手动删除&lt;/h3>
+&lt;p>就像非CRD定义的kube apis一样，对象需要通过写操作更新到新的存储版本。kube-storage-version-migrator也可以为CRs自动完成这一工作。&lt;/p>
+&lt;p>然而，一旦迁移完成，从CRD的.status.storedVersion中删除未使用的存储版本是一个手动过程。&lt;/p>
+&lt;p>kubectl没有直接支持编辑状态。在这个例子中，我们用curl删除版本。&lt;/p>
+&lt;h2 id="15-在不同版本之间收紧一个-schema-是不安全的">15. 在不同版本之间收紧一个 schema 是不安全的&lt;/h2>
+&lt;p>一些kube apis可能有棘轮验证。但一般来说，这种验证的收紧不会发生在API模式中&amp;ndash;收紧验证会导致客户端对数据有不正确的假设。&lt;/p>
+&lt;p>这是一个可能发生的情况。&lt;/p>
+&lt;p>一个API的v1版的字段比v1beta1版的模式更严格
+该API的存储版本是v1
+在v1beta1版本创建的对象不符合v1版本更严格的模式。
+该对象被接受，因为它是在v1beta1创建的，而且存储版本是v1，所以它被存储为v1对象
+etcd中的对象是一个 &amp;ldquo;无效的 &amp;ldquo;v1对象。
+如果你在对象已经被创建之后，将单一版本的模式更新得更严格，也会出现类似的情况。&lt;/p>
+&lt;p>如果在版本之间加强验证，任何使用模式对api响应有期望的客户可能不会做正确的事情。&lt;/p>
+&lt;h3 id="16-kube-storage-version-migrator-will-fail-for-tightened-schemas">16. kube-storage-version-migrator will fail for tightened schemas&lt;/h3>
+&lt;p>kube-storage-version-migator对每个对象进行获取/更新。如果模式已经被收紧（或者棘轮验证没有被实现，只适用于创建），那么它将失败。&lt;/p>
+&lt;h3 id="附录-kind-yvim-auger-etcdctl">附录: kind, yvim, auger, etcdctl&lt;/h3>
+&lt;p>为了简明扼要，这些演示使用了几种工具。&lt;/p>
+&lt;p>kind 是本地快速创建集群的工具.&lt;/p>
+&lt;p>要想用同类集群检查etcd的内容，首先要配置它以暴露etcd端口。&lt;/p>
+&lt;pre>&lt;code>kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+ extraPortMappings:
+ - containerPort: 2379
+ hostPort: 2379
+&lt;/code>&lt;/pre>
+&lt;p>然后配置etcdctl，使其能够与 kind 的 etcd 通信：&lt;/p>
+&lt;pre>&lt;code>docker cp kind-control-plane:/etc/kubernetes/pki/etcd/ca.crt ca.crt
+docker cp kind-control-plane:/etc/kubernetes/pki/etcd/peer.crt peer.crt
+docker cp kind-control-plane:/etc/kubernetes/pki/etcd/peer.key peer.key
+export ETCDCTL_CACERT=./ca.crt 
+export ETCDCTL_CERT=./peer.crt 
+export ETCDCTL_KEY=./peer.key 
+# confirm it works
+etcdctl get /registry --prefix=true
+&lt;/code>&lt;/pre>
+&lt;p>我偶尔会使用yvim，这只是一个别名，用来打开vim，假设文件是yaml（对kubectl的管道连接很有用）。&lt;/p>
+&lt;p>&lt;code>alias yvim='nvim -c &amp;quot;doautocmd Filetype yaml&amp;quot; -R -'&lt;/code>&lt;/p>
+&lt;p>我有时也使用Auger来解码存储在etcd中的protobuf编码的对象。Auger不是开箱即用的，相反，它需要通过引用特定版本的kube来构建，以便它有正确的对象定义。&lt;/p>
+&lt;p>一旦它被正确构建，你就可以直接从etcdctl进行管道连接：&lt;/p>
+&lt;p>&lt;code>etcdctl get /registry/ingress/default/name-virtual-host-ingress --print-value-only | auger decode&lt;/code>&lt;/p>
+&lt;p>原文: &lt;a href="https://evancordell.com/posts/kube-apis-crds/" target="_blank">https://evancordell.com/posts/kube-apis-crds/&lt;/a>&lt;/p></description></item><item><title>kubernetes 1.5.1 搭建过程</title><link>https://www.pigflying.net/post/2016-12-20-k8s-setup/</link><pubDate>Tue, 20 Dec 2016 09:34:00 +0800</pubDate><guid>https://www.pigflying.net/post/2016-12-20-k8s-setup/</guid><description>&lt;p>最近折腾了下 kubernetes 1.5.1,记录下安装过程。&lt;/p>
+&lt;ul>
+&lt;li>安装相关依赖(master node 都需要操作)&lt;/li>
+&lt;/ul>
+&lt;pre>&lt;code class="language-bash">sudo tee /etc/yum.repos.d/docker.repo &amp;lt;&amp;lt;-'EOF'
+[dockerrepo]
+name=Docker Repository
+baseurl=https://yum.dockerproject.org/repo/experimental/centos/7/
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
+EOF
+
+yum install -y golang
+yum install docker-engine -y
+yum -y install ntp
+yum install net-tools bridge-utils bind-utils -y
+yum install socat -y
+yum install -y ebtables
+
+systemctl enable ntpd
+systemctl start ntpd
+systemctl enable docker
+systemctl start docker
+systemctl status docker
+
+setenforce 0
+systemctl disable iptables-services firewalld
+systemctl stop iptables-services firewalld
+
+
+&lt;/code>&lt;/pre>
+&lt;ul>
+&lt;li>编译安装 rpm 包(master node 都需要操作)&lt;/li>
+&lt;/ul>
+&lt;p>源代码 &lt;a href="https://github.com/kubernetes/release" target="_blank">release&lt;/a>，进入 &lt;code>/data/release/rpm&lt;/code>,修改 &lt;code>kubelet.spec&lt;/code> 里的 &lt;code>%global KUBE_VERSION 1.4.6&lt;/code>，修改为对应的版本，运行 &lt;code>./docker-build.sh&lt;/code>，执行成功后 rpm 包在 output 目录下。
+运行 &lt;code>rpm -ivh *.rpm&lt;/code> 安装所有编译成功的 rpm 包。可以在一台机器上编译成功后拷贝到其他机器。&lt;/p>
+&lt;ul>
+&lt;li>准备镜像&lt;/li>
+&lt;/ul>
+&lt;p>由于墙的原因，从 Google 拉不了相关镜像，可以使用国内的灵雀云国际节点转一下，然后打 tag 。官方镜像地址，&lt;a href="https://console.cloud.google.com/kubernetes/images/list?location=GLOBAL&amp;amp;project=google-containers" target="_blank">google-containers&lt;/a>。如果不确定版本，在初始化 &lt;code>master&lt;/code> 节点时，去查看 &lt;code>/etc/kubernetes/manifests&lt;/code> 目录下相关文件。如果有私有仓库，可以打完标签后存储到私有仓库里。&lt;/p>
+&lt;pre>&lt;code class="language-bash">images=(dnsmasq-metrics-amd64:1.0 kubedns-amd64:1.9 kube-scheduler-amd64:v1.5.1 kube-controller-manager-amd64:v1.5.1 kube-apiserver-amd64:v1.5.1 etcd-amd64:3.0.14-kubeadm kube-dnsmasq-amd64:1.4 exechealthz-amd64:1.2 pause-amd64:3.0 kubernetes-dashboard-amd64:v1.5.0 kube-discovery-amd64:1.0 kube-proxy-amd64:v1.5.1)
+for imageName in ${images[@]} ; do
+ docker pull registry.alauda.cn/pigletfly/$imageName
+ docker tag registry.alauda.cn/pigletfly/$imageName gcr.io/google_containers/$imageName
+ docker rmi registry.alauda.cn/pigletfly/$imageName
+done
+
+&lt;/code>&lt;/pre>
+&lt;ul>
+&lt;li>初始化 master&lt;/li>
+&lt;/ul>
+&lt;p>首先进行重置，防止有环境残留。&lt;/p>
+&lt;pre>&lt;code class="language-bash">
+systemctl stop kubelet;
+# 注意: 下面这条命令会干掉所有正在运行的 docker 容器，# 如果要进行重置操作，最好先确定当前运行的所有容器都能干掉(干掉不影响业务)，# 否则的话最好手动删除 kubeadm 创建的相关容器(gcr.io 相关的)
+docker rm -f -v $(docker ps -q);
+find /var/lib/kubelet | xargs -n 1 findmnt -n -t tmpfs -o TARGET -T | uniq | xargs -r umount -v;
+rm -rf /etc/kubernetes /var/lib/kubelet /var/lib/etcd;
+
+&lt;/code>&lt;/pre>
+&lt;p>然后启动 kubelet&lt;/p>
+&lt;pre>&lt;code class="language-bash">systemctl enable kubelet
+systemctl start kubelet
+&lt;/code>&lt;/pre>
+&lt;p>最后开始初始化&lt;/p>
+&lt;pre>&lt;code>kubeadm init --api-advertise-addresses 172.30.215.19 --use-kubernetes-version v1.5.1 --pod-network-cidr=172.31.0.0/16
+&lt;/code>&lt;/pre>
+&lt;p>初始化成功后会打印 token&lt;/p>
+&lt;pre>&lt;code>kubeadm join --token=6e57ff.1e0ee161fa4a3c4a 172.30.198.62
+&lt;/code>&lt;/pre>
+&lt;p>在 node 节点上运行上面的即可&lt;/p>
+&lt;ul>
+&lt;li>验证&lt;/li>
+&lt;/ul>
+&lt;p>加入节点后，可以验证下相关信息。&lt;/p>
+&lt;pre>&lt;code>netstat -atnp |grep 443
+kubectl get cs
+kubectl cluster-info
+kubectl get pod --namespace=kube-system
+kubectl get po --namespace=kube-system -o wide
+kubectl describe svc kubernetes-dashboard --namespace=kube-system
+kubectl get svc --namespace=kube-system
+&lt;/code>&lt;/pre></description></item></channel></rss>

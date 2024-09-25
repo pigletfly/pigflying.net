@@ -1,12 +1,40 @@
-<!doctype html><html lang=zh-hans><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=HandheldFriendly content="True"><meta http-equiv=X-UA-Compatible content="IE=edge"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=generator content="Hugo 0.124.1"><title>Kubernetes - 大海里的木鱼</title>
+<!doctype html><html lang=zh-hans><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=HandheldFriendly content="True"><meta http-equiv=X-UA-Compatible content="IE=edge"><meta http-equiv=Cache-Control content="no-transform"><meta http-equiv=Cache-Control content="no-siteapp"><meta name=generator content="Hugo 0.134.3"><title>Kubernetes - 大海里的木鱼</title>
 <meta name=author content="木鱼"><meta name=description content="A minimal Hugo theme with nice theme color."><link rel=alternate type=application/rss+xml href=https://www.pigflying.net/tags/kubernetes/index.xml title=大海里的木鱼><meta property="og:title" content="Kubernetes"><meta name=twitter:title content="Kubernetes"><meta property="og:type" content="website"><meta property="og:url" content="https://www.pigflying.net/tags/kubernetes/"><meta property="og:image" content="https://www.pigflying.net/img/og.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://www.pigflying.net/img/og.png"><meta property="og:updated_time" content="2021-08-08T09:34:00+08:00"><style>@media(prefers-color-scheme:dark){body[data-theme=auto] img{filter:brightness(60%)}}body[data-theme=dark] img{filter:brightness(60%)}</style><link rel=stylesheet href=https://www.pigflying.net/assets/css/fuji.min.css><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-34929546-1")</script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-34929546-1"></script></head><body><script data-cfasync=false>var fujiThemeData=localStorage.getItem("fuji_data-theme");fujiThemeData?fujiThemeData!=="auto"&&document.body.setAttribute("data-theme",fujiThemeData==="dark"?"dark":"light"):localStorage.setItem("fuji_data-theme","auto")</script><div id=header><div class="container yue"><div id=brand><a href=https://www.pigflying.net/>大海里的木鱼</a></div></div><div id=nav role=navigation><a href=/>Home</a>
 <a href=/archives/>Archives</a>
 <a href=/about/>About</a>
 <a href=/index.xml>RSS</a></div></div><div id=main><div class="container yue"><div class="col-12 col-md-9 float-left content"><div class=page-info><span>拥有标签 Kubernetes 的文章：</span></div><div class=post><h2 class="post-item post-title"><a href=https://www.pigflying.net/post/2021-08-08-k8s-api/>(译)16 件关于 Kubernetes APIs 和 CRDs 你所不知道的事情</a></h2><div class="post-item post-meta"><span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-08-08</span>
 <span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;4828 字</span>
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href=/tags/kubernetes>kubernetes</a>&nbsp;</span></div><div class="post-item post-summary markdown-body">第 15 个会震惊到你！ 如果你对 kubernetes 很熟悉，那么你很可能对 kubernetes API 和 controller 有所了解：调和循环查看 api 中存储的数据，并且努力让集群中的状态和声明的 API 状态相匹配。 这是一个相当强大的模式，随着时间的推移，已经证明了它的价值。</div></div><div class=post><h2 class="post-item post-title"><a href=https://www.pigflying.net/post/2016-12-20-k8s-setup/>kubernetes 1.5.1 搭建过程</a></h2><div class="post-item post-meta"><span><i class="iconfont icon-today-sharp"></i>&nbsp;2016-12-20</span>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href=/tags/kubernetes>kubernetes</a>&nbsp;</span></div><div class="post-item post-summary markdown-body"><p>第 15 个会震惊到你！</p><p>如果你对 kubernetes 很熟悉，那么你很可能对 kubernetes API 和 controller 有所了解：调和循环查看 api 中存储的数据，并且努力让集群中的状态和声明的 API 状态相匹配。</p><p>这是一个相当强大的模式，随着时间的推移，已经证明了它的价值。但是，尽管核心思想看起来很简单，但一旦你从表面上看，有很多细节可能会令人惊讶。</p></div></div><div class=post><h2 class="post-item post-title"><a href=https://www.pigflying.net/post/2016-12-20-k8s-setup/>kubernetes 1.5.1 搭建过程</a></h2><div class="post-item post-meta"><span><i class="iconfont icon-today-sharp"></i>&nbsp;2016-12-20</span>
 <span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;643 字</span>
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href=/tags/kubernetes>kubernetes</a>&nbsp;</span></div><div class="post-item post-summary markdown-body">最近折腾了下 kubernetes 1.5.1,记录下安装过程。 安装相关依赖(master node 都需要操作) sudo tee /etc/yum.repos.d/docker.repo &lt;&lt;-'EOF' [dockerrepo] name=Docker Repository baseurl=https://yum.dockerproject.org/repo/experimental/centos/7/ enabled=1 gpgcheck=1 gpgkey=https://yum.dockerproject.org/gpg EOF yum install -y golang yum install docker-engine -y yum -y install ntp yum install net-tools bridge-utils bind-utils -y yum install socat -y yum install -y ebtables systemctl enable ntpd systemctl start ntpd systemctl enable docker systemctl start docker systemctl status docker setenforce 0 systemctl disable iptables-services firewalld</div></div></div></div><div class=btn><div class=btn-menu id=btn-menu><i class="iconfont icon-grid-sharp"></i></div><div class=btn-toggle-mode><i class="iconfont icon-contrast-sharp"></i></div><div class=btn-scroll-top><i class="iconfont icon-chevron-up-circle-sharp"></i></div></div><aside class=sidebar-mobile style=display:none><div class=sidebar-wrapper><div class="sidebar-item sidebar-pages"><h3>页面</h3><ul><li><a href=/>Home</a></li><li><a href=/archives/>Archives</a></li><li><a href=/about/>About</a></li><li><a href=/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-links"><h3>链接</h3><ul></ul></div><div class="sidebar-item sidebar-tags"><h3>标签</h3><div><span><a href=/tags/blogger/>Blogger</a>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href=/tags/kubernetes>kubernetes</a>&nbsp;</span></div><div class="post-item post-summary markdown-body"><p>最近折腾了下 kubernetes 1.5.1,记录下安装过程。</p><ul><li>安装相关依赖(master node 都需要操作)</li></ul><pre><code class=language-bash>sudo tee /etc/yum.repos.d/docker.repo &lt;&lt;-'EOF'
+[dockerrepo]
+name=Docker Repository
+baseurl=https://yum.dockerproject.org/repo/experimental/centos/7/
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
+EOF
+
+yum install -y golang
+yum install docker-engine -y
+yum -y install ntp
+yum install net-tools  bridge-utils bind-utils -y
+yum install socat -y
+yum install -y ebtables
+
+systemctl enable ntpd
+systemctl start ntpd
+systemctl enable docker
+systemctl start docker
+systemctl status docker
+
+setenforce 0
+systemctl disable iptables-services firewalld
+systemctl stop iptables-services firewalld
+
+
+</code></pre><ul><li>编译安装 rpm 包(master node 都需要操作)</li></ul><p>源代码 <a href=https://github.com/kubernetes/release target=_blank>release</a>，进入 <code>/data/release/rpm</code>,修改 <code>kubelet.spec</code> 里的 <code>%global KUBE_VERSION 1.4.6</code>，修改为对应的版本，运行 <code>./docker-build.sh</code>，执行成功后 rpm 包在 output 目录下。
+运行 <code>rpm -ivh *.rpm</code> 安装所有编译成功的 rpm 包。可以在一台机器上编译成功后拷贝到其他机器。</p></div></div></div></div><div class=btn><div class=btn-menu id=btn-menu><i class="iconfont icon-grid-sharp"></i></div><div class=btn-toggle-mode><i class="iconfont icon-contrast-sharp"></i></div><div class=btn-scroll-top><i class="iconfont icon-chevron-up-circle-sharp"></i></div></div><aside class=sidebar-mobile style=display:none><div class=sidebar-wrapper><div class="sidebar-item sidebar-pages"><h3>页面</h3><ul><li><a href=/>Home</a></li><li><a href=/archives/>Archives</a></li><li><a href=/about/>About</a></li><li><a href=/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-links"><h3>链接</h3><ul></ul></div><div class="sidebar-item sidebar-tags"><h3>标签</h3><div><span><a href=/tags/blogger/>Blogger</a>
 </span><span><a href=/tags/google/>Google</a>
 </span><span><a href=/tags/kubernetes/>Kubernetes</a>
 </span><span><a href=/tags/other/>Other</a>
